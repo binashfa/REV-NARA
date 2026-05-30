@@ -8,6 +8,9 @@ use App\Models\Nilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\User;
+
 
 class GuruController extends Controller
 {
@@ -567,6 +570,209 @@ class GuruController extends Controller
         );
     }
 
+    public function exportRaportPdf($id)
+    {
+        $siswa = Siswa::with([
+            'nilais.mapel',
+            'hasilMinat',
+            'hasilKepribadian'
+        ])->findOrFail($id);
+
+        $ranking = [];
+        $leavingFlows = [];
+        $enteringFlows = [];
+        $netFlows = [];
+
+        // =========================
+        // RATA AKADEMIK
+        // =========================
+
+        $rataAkademik = $siswa->nilais->avg(function ($n) {
+
+            return (
+                ($n->uts ?? 0) +
+                ($n->uas ?? 0) +
+                ($n->uam ?? 0)
+            ) / 3;
+        });
+
+        // =========================
+        // KONVERSI AKADEMIK
+        // =========================
+
+        if ($rataAkademik >= 90) {
+
+            $c1 = 5;
+        } elseif ($rataAkademik >= 85) {
+
+            $c1 = 4;
+        } elseif ($rataAkademik >= 80) {
+
+            $c1 = 3;
+        } elseif ($rataAkademik >= 75) {
+
+            $c1 = 2;
+        } else {
+
+            $c1 = 1;
+        }
+
+        // =========================
+        // DATA ALTERNATIF
+        // =========================
+
+        $alternatif = [
+
+            'IPA' => [
+                'akademik' => $c1,
+                'minat' => $siswa->hasilMinat->ipa ?? 0,
+                'kepribadian' => $siswa->hasilKepribadian->ipa ?? 0
+            ],
+
+            'IPS' => [
+                'akademik' => $c1,
+                'minat' => $siswa->hasilMinat->ips ?? 0,
+                'kepribadian' => $siswa->hasilKepribadian->ips ?? 0
+            ],
+
+            'TKJ' => [
+                'akademik' => $c1,
+                'minat' => $siswa->hasilMinat->tkj ?? 0,
+                'kepribadian' => $siswa->hasilKepribadian->tkj ?? 0
+            ],
+
+            'DKV' => [
+                'akademik' => $c1,
+                'minat' => $siswa->hasilMinat->dkv ?? 0,
+                'kepribadian' => $siswa->hasilKepribadian->dkv ?? 0
+            ],
+
+            'Akuntansi' => [
+                'akademik' => $c1,
+                'minat' => $siswa->hasilMinat->akuntansi ?? 0,
+                'kepribadian' => $siswa->hasilKepribadian->akuntansi ?? 0
+            ],
+
+            'Ponpes' => [
+                'akademik' => $c1,
+                'minat' => $siswa->hasilMinat->pondok_pesantren ?? 0,
+                'kepribadian' => $siswa->hasilKepribadian->pondok_pesantren ?? 0
+            ]
+
+        ];
+
+        // =========================
+        // BOBOT
+        // =========================
+
+        $bobot = [
+            'akademik' => 5,
+            'minat' => 5,
+            'kepribadian' => 5
+        ];
+
+        // =========================
+        // PREFERENSI
+        // =========================
+
+        $preferensi = [];
+
+        foreach ($alternatif as $a => $nilaiA) {
+
+            foreach ($alternatif as $b => $nilaiB) {
+
+                if ($a == $b) {
+
+                    $preferensi[$a][$b] = 0;
+
+                    continue;
+                }
+
+                $d1 =
+                    ($nilaiA['akademik'] - $nilaiB['akademik'])
+                    * $bobot['akademik'];
+
+                $d2 =
+                    ($nilaiA['minat'] - $nilaiB['minat'])
+                    * $bobot['minat'];
+
+                $d3 =
+                    ($nilaiA['kepribadian'] - $nilaiB['kepribadian'])
+                    * $bobot['kepribadian'];
+
+                $total = $d1 + $d2 + $d3;
+
+                $preferensi[$a][$b] =
+                    $total > 0 ? $total : 0;
+            }
+        }
+
+        // =========================
+        // LEAVING FLOW
+        // =========================
+
+        foreach ($preferensi as $a => $row) {
+
+            $leavingFlows[$a] =
+
+                array_sum($row) /
+
+                (count($alternatif) - 1);
+        }
+
+        // =========================
+        // ENTERING FLOW
+        // =========================
+
+        foreach ($alternatif as $a => $v) {
+
+            $jumlah = 0;
+
+            foreach ($preferensi as $x => $row) {
+
+                $jumlah += $row[$a];
+            }
+
+            $enteringFlows[$a] =
+
+                $jumlah /
+
+                (count($alternatif) - 1);
+        }
+
+        // =========================
+        // NET FLOW
+        // =========================
+
+        foreach ($alternatif as $a => $v) {
+
+            $netFlows[$a] =
+
+                $leavingFlows[$a] -
+
+                $enteringFlows[$a];
+        }
+
+        $ranking = $netFlows;
+
+        arsort($ranking);
+
+        $pdf = Pdf::loadView(
+            'guru.raport-pdf',
+            compact(
+                'siswa',
+                'ranking',
+                'leavingFlows',
+                'enteringFlows',
+                'netFlows'
+            )
+        );
+
+        return $pdf->download(
+            'raport-' . $siswa->nama . '.pdf'
+        );
+    }
+
     public function setting()
     {
         $guru = Auth::user()->guru;
@@ -589,7 +795,7 @@ class GuruController extends Controller
 
         ]);
 
-        $user = Auth::user();
+        $user = User::find(Auth::id());
 
         $user->update([
 
@@ -603,15 +809,21 @@ class GuruController extends Controller
 
         $guru = $user->guru;
 
-        $guru->update([
+        if ($guru) {
 
-            'nama' => $request->nama
+            $guru->update([
 
-        ]);
+                'nama' => $request->nama
+
+            ]);
+        }
 
         return back()->with(
+
             'success',
+
             'Setting berhasil diperbarui'
+
         );
     }
 }

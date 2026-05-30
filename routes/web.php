@@ -36,6 +36,11 @@ Route::middleware(['role:guru'])->group(function () {
 
     Route::get('/guru/raport', [GuruController::class, 'raport']);
 
+    Route::get(
+        '/guru/raport-pdf/{id}',
+        [GuruController::class, 'exportRaportPdf']
+    );
+
     Route::get('/guru/setting', [GuruController::class, 'setting']);
 
     Route::post(

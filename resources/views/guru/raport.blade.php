@@ -77,18 +77,55 @@
         <div class="bg-white rounded-3xl shadow-sm p-8">
 
             <!-- IDENTITAS -->
-            <div class="mb-8">
+            <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
 
-                <h2 class="text-2xl font-bold text-indigo-600">
-                    {{ $siswa->nama }}
-                </h2>
+                <!-- IDENTITAS -->
+                <div>
 
-                <div class="mt-2 text-slate-500">
-                    NISN : {{ $siswa->nisn }}
+                    <h2 class="text-2xl font-bold text-indigo-600">
+                        {{ $siswa->nama }}
+                    </h2>
+
+                    <div class="mt-2 space-y-1 text-slate-500 text-sm">
+
+                        <p>
+                            NISN :
+                            {{ $siswa->nisn }}
+                        </p>
+
+                        <p>
+                            Jenis Kelamin :
+                            {{ $siswa->jenis_kelamin }}
+                        </p>
+
+                    </div>
+
                 </div>
 
-                <div class="text-slate-500">
-                    Jenis Kelamin : {{ $siswa->jenis_kelamin }}
+                <!-- BUTTON -->
+                <div>
+
+                    <a
+                        href="/guru/raport-pdf/{{ $siswa->id }}"
+                        class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-2xl shadow-sm transition">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+
+                        </svg>
+
+                        Export PDF
+
+                    </a>
+
                 </div>
 
             </div>
