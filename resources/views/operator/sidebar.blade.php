@@ -1,188 +1,144 @@
 @php
-
 $sidebarOperator = \App\Models\Operator::where(
     'user_id',
     auth()->id()
 )->first();
 
+$path = request()->path();
 @endphp
 
-<div class="w-[270px] h-screen bg-white border-r border-slate-200 flex flex-col justify-between px-5 py-6 shadow-sm">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- TOP -->
-    <div>
+<div class="w-[270px] h-screen 
+    bg-gradient-to-b from-[#0f4f5c] to-[#083944] 
+    text-white flex flex-col justify-between px-5 py-6 
+    shadow-2xl relative overflow-hidden">
+
+    <!-- EFFECT -->
+    <div class="absolute top-0 right-0 w-52 h-52 bg-[#839958]/20 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-0 left-0 w-52 h-52 bg-[#D3968C]/10 blur-3xl rounded-full"></div>
+
+    <div class="relative z-10 flex flex-col h-full">
 
         <!-- LOGO -->
-        <div class="flex items-center gap-3 mb-10">
-
-            <div class="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-bold text-lg">
-                O
-            </div>
-
-            <div>
-
-                <h1 class="text-lg font-bold text-slate-800">
-                    SIOPERATOR
-                </h1>
-
-                <p class="text-xs text-slate-400">
-                    Sistem Akademik
-                </p>
-
-            </div>
-
+        <div class="flex flex-col items-center mb-10">
+            <img src="/images/logoNara.png"
+                class="h-20 object-contain transition duration-300
+                hover:scale-110 hover:-translate-y-1
+                hover:drop-shadow-[0_8px_25px_rgba(255,255,255,0.35)]">
         </div>
 
         <!-- MENU -->
-        <ul class="space-y-2">
+        <ul class="space-y-2 text-sm">
 
+            <!-- DASHBOARD (FIX UTAMA) -->
             <li>
-                <a
-                    href="/operator"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-indigo-50 text-indigo-600 font-medium hover:bg-indigo-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 11V9m0 0L5 14m7-5l7 5" />
-                    </svg>
-
+                <a href="{{ url('/operator/dashboard') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator') || request()->is('operator/dashboard') 
+                        ? 'bg-[#F7F4D5] text-[#105666] font-semibold' 
+                        : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-house"></i>
                     Dashboard
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/kelola-akun"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1118.364 4.56a9 9 0 01-13.243 13.243z" />
-                    </svg>
-
+                <a href="{{ url('/operator/kelola-akun') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/kelola-akun') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-users"></i>
                     Kelola Akun
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/kelola-siswa"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V4H2v16h5m10 0v-4a3 3 0 00-3-3H10a3 3 0 00-3 3v4m10 0H7" />
-                    </svg>
-
+                <a href="{{ url('/operator/kelola-siswa') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/kelola-siswa') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-user-graduate"></i>
                     Kelola Siswa
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/kelola-mapel"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.483 9.246 5 7.5 5S4.168 5.483 3 6.253v13C4.168 18.483 5.754 18 7.5 18s3.332.483 4.5 1.253m0-13C13.168 5.483 14.754 5 16.5 5s3.332.483 4.5 1.253v13C19.832 18.483 18.246 18 16.5 18s-3.332.483-4.5 1.253" />
-                    </svg>
-
+                <a href="{{ url('/operator/kelola-mapel') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/kelola-mapel') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-book-open"></i>
                     Kelola Mapel
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/kelola-nilai"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-
+                <a href="{{ url('/operator/kelola-nilai') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/kelola-nilai') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-file-lines"></i>
                     Kelola Nilai
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/kelola-minat-bakat"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6m4 6V7m4 10V4" />
-                    </svg>
-
+                <a href="{{ url('/operator/kelola-minat-bakat') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/kelola-minat-bakat') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-chart-line"></i>
                     Kelola Minat Bakat
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/kelola-kepribadian"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6m8 0A9 9 0 1112 3a9 9 0 019 9z" />
-                    </svg>
-
+                <a href="{{ url('/operator/kelola-kepribadian') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/kelola-kepribadian') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-brain"></i>
                     Kelola Kepribadian
-
                 </a>
             </li>
 
             <li>
-                <a
-                    href="/operator/setting"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 hover:bg-slate-100 transition">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-1.14 1.603-1.14 1.902 0l.7 2.662a1 1 0 00.95.69h2.8c1.2 0 1.698 1.54.73 2.31l-2.267 1.8a1 1 0 00-.364 1.118l.87 2.632c.35 1.06-.85 1.94-1.76 1.28l-2.37-1.72a1 1 0 00-1.176 0l-2.37 1.72c-.91.66-2.11-.22-1.76-1.28l.87-2.632a1 1 0 00-.364-1.118l-2.267-1.8c-.968-.77-.47-2.31.73-2.31h2.8a1 1 0 00.95-.69l.7-2.662z" />
-                    </svg>
-
+                <a href="{{ url('/operator/setting') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition
+                    {{ request()->is('operator/setting') ? 'bg-[#F7F4D5] text-[#105666]' : 'hover:bg-white/10' }}">
+                    <i class="fa-solid fa-gear"></i>
                     Setting
-
                 </a>
             </li>
 
         </ul>
 
-    </div>
-
-    <!-- BOTTOM -->
-    <div>
-
-        <a
-            href="/logout"
-            class="flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition mb-5">
-
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
-            </svg>
-
-            Logout
-
-        </a>
+        <div class="flex-1"></div>
 
         <!-- PROFILE -->
-        <div class="border border-slate-200 rounded-2xl p-3 flex items-center gap-3">
+        <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 flex items-center gap-3 mb-4">
 
-            <div class="w-11 h-11 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold uppercase">
+            <div class="w-10 h-10 rounded-full 
+                bg-[#F7F4D5] text-[#105666] 
+                flex items-center justify-center font-bold uppercase shadow-inner">
                 {{ substr($sidebarOperator->nama, 0, 1) }}
             </div>
 
-            <h3 class="text-sm font-semibold text-slate-700">
-                {{ $sidebarOperator->nama }}
-            </h3>
-
-            <p class="text-xs text-slate-400">
-                {{ auth()->user()->username }}
-            </p>
+            <div>
+                <h3 class="text-sm font-semibold">
+                    {{ $sidebarOperator->nama }}
+                </h3>
+                <p class="text-xs text-white/70">
+                    {{ auth()->user()->username }}
+                </p>
+            </div>
 
         </div>
+
+        <!-- LOGOUT -->
+        <a href="/logout"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl 
+            bg-[#D3968C] hover:bg-[#c07f77] text-white 
+            transition-all duration-300 hover:shadow-md active:scale-[0.98]">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
 
     </div>
 

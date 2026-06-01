@@ -16,64 +16,64 @@
 
 <main class="max-w-7xl mx-auto px-4 md:px-6 pt-8 pb-16">
 
-<!-- HEADER -->
-<header class="mb-8 md:mb-12">
-    <div class="w-full bg-gradient-to-br from-[#105666] to-[#0d4b59] 
-                rounded-[24px] md:rounded-[32px] 
-                p-6 md:p-12 
-                flex items-center justify-between 
-                shadow-xl relative overflow-hidden
-                transition-all duration-300
-                hover:shadow-2xl hover:-translate-y-[2px]">
+    <!-- HEADER -->
+    <header class="mb-8 md:mb-12">
+        <div class="w-full bg-gradient-to-br from-[#105666] to-[#0d4b59] 
+                    rounded-[24px] md:rounded-[32px] 
+                    p-6 md:p-12 
+                    flex items-center justify-between 
+                    shadow-xl relative overflow-hidden
+                    transition-all duration-300
+                    hover:shadow-2xl hover:-translate-y-[2px]">
 
-        <!-- GLOW -->
-        <div class="absolute top-0 right-0 w-60 h-60 md:w-80 md:h-80 bg-[#839958]/20 rounded-full blur-3xl -mr-10 -mt-10 md:-mr-20 md:-mt-20"></div>
-        <div class="absolute bottom-0 left-1/4 md:left-1/3 w-40 h-40 md:w-60 md:h-60 bg-[#D3968C]/20 rounded-full blur-3xl"></div>
+            <!-- GLOW -->
+            <div class="absolute top-0 right-0 w-60 h-60 md:w-80 md:h-80 bg-[#839958]/20 rounded-full blur-3xl -mr-10 -mt-10 md:-mr-20 md:-mt-20"></div>
+            <div class="absolute bottom-0 left-1/4 md:left-1/3 w-40 h-40 md:w-60 md:h-60 bg-[#D3968C]/20 rounded-full blur-3xl"></div>
 
-        <!-- TEXT -->
-        <div class="relative z-10 space-y-3 md:space-y-4">
+            <!-- TEXT -->
+            <div class="relative z-10 space-y-3 md:space-y-4">
 
-            <!-- BADGE -->
-            <span class="inline-flex items-center gap-2 
-                        bg-white/10 text-[#F7F4D5] 
-                        text-[10px] md:text-xs font-semibold 
-                        px-3 py-1.5 rounded-full 
-                        backdrop-blur-sm tracking-wider uppercase shadow-sm">
+                <!-- BADGE -->
+                <span class="inline-flex items-center gap-2 
+                            bg-white/10 text-[#F7F4D5] 
+                            text-[10px] md:text-xs font-semibold 
+                            px-3 py-1.5 rounded-full 
+                            backdrop-blur-sm tracking-wider uppercase shadow-sm">
 
-                <i class="fa-solid fa-gear text-[#839958] animate-spin"></i>
-                Pengaturan
+                    <i class="fa-solid fa-gear text-[#839958] animate-spin"></i>
+                    Pengaturan
 
-            </span>
+                </span>
 
-            <!-- TITLE -->
-            <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Setting Guru
-            </h1>
+                <!-- TITLE -->
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                    Setting Guru
+                </h1>
 
-            <!-- DESC -->
-            <p class="text-gray-200 text-xs md:text-sm lg:text-base font-medium max-w-md leading-relaxed">
-                Kelola akun dan profil guru dengan mudah dalam satu dashboard.
-            </p>
-
-        </div>
-
-        <!-- ICON -->
-        <div class="hidden md:flex relative z-10 items-center justify-center pr-4 lg:pr-6">
-            <div class="w-20 h-20 lg:w-24 lg:h-24 
-                        bg-white/10 backdrop-blur-md 
-                        rounded-2xl lg:rounded-3xl 
-                        shadow-inner flex items-center justify-center 
-                        border border-white/20 
-                        transform rotate-6 hover:rotate-0 
-                        transition duration-300">
-
-                <i class="fa-solid fa-user-gear text-[#F7F4D5] text-3xl lg:text-4xl"></i>
+                <!-- DESC -->
+                <p class="text-gray-200 text-xs md:text-sm lg:text-base font-medium max-w-md leading-relaxed">
+                    Kelola akun dan profil guru dengan mudah dalam satu dashboard.
+                </p>
 
             </div>
-        </div>
 
-    </div>
-</header>
+            <!-- ICON -->
+            <div class="hidden md:flex relative z-10 items-center justify-center pr-4 lg:pr-6">
+                <div class="w-20 h-20 lg:w-24 lg:h-24 
+                            bg-white/10 backdrop-blur-md 
+                            rounded-2xl lg:rounded-3xl 
+                            shadow-inner flex items-center justify-center 
+                            border border-white/20 
+                            transform rotate-6 hover:rotate-0 
+                            transition duration-300">
+
+                    <i class="fa-solid fa-user-gear text-[#F7F4D5] text-3xl lg:text-4xl"></i>
+
+                </div>
+            </div>
+
+        </div>
+    </header>
 
     <!-- CARD FULL -->
     <section class="w-full">

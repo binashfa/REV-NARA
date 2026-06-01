@@ -13,208 +13,225 @@
 
 </head>
 
-<body class="bg-slate-100 flex">
+<body class="bg-gradient-to-b from-white via-[#fdfafa] to-[#faf6f6] min-h-screen font-sans antialiased">
 
+<!-- SIDEBAR FIX -->
+<div class="fixed top-0 left-0 z-50">
     @include('operator.sidebar')
+</div>
 
-    <div class="flex-1 p-8">
+<!-- MAIN -->
+<main class="ml-[270px] min-h-screen px-6 pt-10 pb-10">
 
-        <!-- HEADER -->
-        <div class="mb-8">
+    <!-- HERO / HEADER -->
+    <div class="mb-10">
+        <div class="relative overflow-hidden rounded-[32px] p-8 md:p-10 flex items-center justify-between
+            shadow-sm hover:shadow-lg transition-all duration-300
+            bg-gradient-to-br from-[#F7F4D5] via-[#f1f5d6] to-[#e9f0d0]">
 
-            <h1 class="text-3xl font-bold text-slate-800">
-                Kelola Nilai
-            </h1>
+            <!-- TOP BORDER -->
+            <div class="absolute top-0 left-0 w-full h-[4px] 
+                bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-            <p class="text-slate-500 mt-1">
-                Data seluruh nilai siswa
-            </p>
+            <!-- GLOW -->
+            <div class="absolute -top-16 -right-16 w-40 h-40 bg-[#105666]/10 blur-3xl rounded-full"></div>
+            <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-[#839958]/10 blur-3xl rounded-full"></div>
 
-        </div>
+            <!-- TEXT -->
+            <div class="relative z-10 space-y-3">
 
-        <!-- CARD -->
-        <div class="bg-white rounded-3xl shadow-sm p-6">
+                <span class="inline-flex items-center gap-2 bg-white/60 text-[#105666] px-4 py-1.5 rounded-full text-xs font-bold border backdrop-blur-sm shadow-sm">
+                    <i class="fa-solid fa-chart-line text-[#839958]"></i>
+                    Data Nilai
+                </span>
 
-            <div class="overflow-x-auto">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#105666]">
+                    Kelola Nilai
+                </h1>
 
-                <table class="w-full">
-
-                    <thead>
-
-                        <tr class="border-b text-slate-500">
-
-                            <th class="text-left py-4">
-                                No
-                            </th>
-
-                            <th class="text-left py-4">
-                                Nama Siswa
-                            </th>
-
-                            <th class="text-left py-4">
-                                Mapel
-                            </th>
-
-                            <th class="text-center py-4">
-                                UTS
-                            </th>
-
-                            <th class="text-center py-4">
-                                UAS
-                            </th>
-
-                            <th class="text-center py-4">
-                                UAM
-                            </th>
-
-                            <th class="text-left py-4">
-                                Aksi
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        @forelse($nilais as $nilai)
-
-                        <tr class="border-b hover:bg-slate-50 transition">
-
-                            <td class="py-4">
-                                {{ $loop->iteration }}
-                            </td>
-
-                            <td class="py-4">
-                                {{ $nilai->siswa->nama }}
-                            </td>
-
-                            <td class="py-4">
-
-                                <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm">
-
-                                    {{ $nilai->guru->mapel->nama_mapel }}
-
-                                </span>
-
-                            </td>
-
-                            <form
-                                method="POST"
-                                action="/operator/edit-nilai/{{ $nilai->id }}"
-                                id="nilaiForm-{{ $nilai->id }}">
-
-                                @csrf
-                                @method('PUT')
-
-                                <!-- NILAI -->
-                                <!-- UTS -->
-                                <td class="py-4 text-center">
-
-                                    <span
-                                        id="utsText-{{ $nilai->id }}"
-                                        class="font-bold text-indigo-600">
-                                        {{ $nilai->uts }}
-                                    </span>
-
-                                    <input
-                                        type="number"
-                                        name="uts"
-                                        value="{{ $nilai->uts }}"
-                                        id="utsInput-{{ $nilai->id }}"
-                                        class="hidden w-20 border border-slate-300 rounded-xl px-3 py-2 text-center">
-
-                                </td>
-
-                                <!-- UAS -->
-                                <td class="py-4 text-center">
-
-                                    <span
-                                        id="uasText-{{ $nilai->id }}"
-                                        class="font-bold text-green-600">
-                                        {{ $nilai->uas }}
-                                    </span>
-
-                                    <input
-                                        type="number"
-                                        name="uas"
-                                        value="{{ $nilai->uas }}"
-                                        id="uasInput-{{ $nilai->id }}"
-                                        class="hidden w-20 border border-slate-300 rounded-xl px-3 py-2 text-center">
-
-                                </td>
-
-                                <!-- UAM -->
-                                <td class="py-4 text-center">
-
-                                    <span
-                                        id="uamText-{{ $nilai->id }}"
-                                        class="font-bold text-orange-600">
-                                        {{ $nilai->uam }}
-                                    </span>
-
-                                    <input
-                                        type="number"
-                                        name="uam"
-                                        value="{{ $nilai->uam }}"
-                                        id="uamInput-{{ $nilai->id }}"
-                                        class="hidden w-20 border border-slate-300 rounded-xl px-3 py-2 text-center">
-
-                                </td>
-
-                            </form>
-
-                            <!-- AKSI -->
-                            <td class="py-4">
-
-                                <div class="flex gap-2">
-
-                                    <!-- EDIT -->
-                                    <button
-                                        type="button"
-                                        id="editBtn-{{ $nilai->id }}"
-                                        onclick="editNilai('{{ $nilai->id }}')"
-                                        class="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm">
-                                        Edit
-                                    </button>
-
-                                    <!-- SIMPAN -->
-                                    <button
-                                        type="submit"
-                                        form="nilaiForm-{{ $nilai->id }}"
-                                        id="saveBtn-{{ $nilai->id }}"
-                                        class="hidden bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm">
-                                        Simpan
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        @empty
-
-                        <tr>
-
-                            <td colspan="6" class="text-center py-10 text-slate-400">
-
-                                Belum ada data nilai
-
-                            </td>
-
-                        </tr>
-
-                        @endforelse
-
-                    </tbody>
-
-                </table>
+                <p class="text-[#105666]/70 text-sm md:text-base font-medium">
+                    Kelola nilai siswa dengan mudah dan cepat 📊
+                </p>
 
             </div>
 
-        </div>
+            <!-- ICON -->
+            <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl 
+                shadow-inner items-center justify-center border 
+                transform rotate-6 hover:rotate-0 transition duration-300">
 
+                <i class="fa-solid fa-chart-line text-[#105666] text-3xl"></i>
+            </div>
+
+        </div>
+    </div>
+
+<!-- CARD -->
+<div class="bg-white rounded-[32px] shadow-sm p-6 border border-gray-100 relative overflow-hidden">
+
+    <!-- TOP LINE -->
+    <div class="absolute top-0 left-0 w-full h-[4px] 
+        bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
+
+    <div class="overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+            <!-- HEADER -->
+            <thead>
+                <tr class="text-left text-gray-400 border-b-2 border-gray-100 uppercase text-xs tracking-widest">
+                    <th class="py-4 pl-2 font-bold">No</th>
+                    <th class="py-4 font-bold">Nama Siswa</th>
+                    <th class="py-4 font-bold">Mapel</th>
+                    <th class="py-4 text-center font-bold">UTS</th>
+                    <th class="py-4 text-center font-bold">UAS</th>
+                    <th class="py-4 text-center font-bold">UAM</th>
+                    <th class="py-4 text-center font-bold">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-gray-700">
+
+                @forelse($nilais as $nilai)
+
+                <tr class="border-b border-gray-50 transition-all duration-300 hover:bg-[#F7F4D5]/30 group">
+
+                    <!-- NO -->
+                    <td class="py-4 pl-2 font-semibold text-gray-600">
+                        {{ $loop->iteration }}
+                    </td>
+
+                    <!-- NAMA -->
+                    <td class="py-4 font-semibold text-[#105666]">
+                        {{ $nilai->siswa->nama }}
+                    </td>
+
+                    <!-- MAPEL -->
+                    <td class="py-4">
+                        <span class="inline-flex items-center gap-2 
+                            bg-[#105666]/10 text-[#105666] 
+                            px-3 py-1.5 rounded-full text-xs font-semibold">
+
+                            <i class="fa-solid fa-book text-[10px]"></i>
+                            {{ $nilai->guru->mapel->nama_mapel }}
+
+                        </span>
+                    </td>
+
+                    <form
+                        method="POST"
+                        action="/operator/edit-nilai/{{ $nilai->id }}"
+                        id="nilaiForm-{{ $nilai->id }}">
+
+                        @csrf
+                        @method('PUT')
+
+                        <!-- UTS -->
+                        <td class="py-4 text-center">
+
+                            <span
+                                id="utsText-{{ $nilai->id }}"
+                                class="font-bold text-[#105666]">
+                                {{ $nilai->uts }}
+                            </span>
+
+                            <input
+                                type="number"
+                                name="uts"
+                                value="{{ $nilai->uts }}"
+                                id="utsInput-{{ $nilai->id }}"
+                                class="hidden w-20 border border-gray-200 rounded-xl px-3 py-2 text-center
+                                focus:ring-2 focus:ring-[#839958] outline-none">
+                        </td>
+
+                        <!-- UAS -->
+                        <td class="py-4 text-center">
+
+                            <span
+                                id="uasText-{{ $nilai->id }}"
+                                class="font-bold text-[#105666]">
+                                {{ $nilai->uas }}
+                            </span>
+
+                            <input
+                                type="number"
+                                name="uas"
+                                value="{{ $nilai->uas }}"
+                                id="uasInput-{{ $nilai->id }}"
+                                class="hidden w-20 border border-gray-200 rounded-xl px-3 py-2 text-center
+                                focus:ring-2 focus:ring-[#839958] outline-none">
+                        </td>
+
+                        <!-- UAM -->
+                        <td class="py-4 text-center">
+
+                            <span
+                                id="uamText-{{ $nilai->id }}"
+                                class="font-bold text-[#105666]">
+                                {{ $nilai->uam }}
+                            </span>
+
+                            <input
+                                type="number"
+                                name="uam"
+                                value="{{ $nilai->uam }}"
+                                id="uamInput-{{ $nilai->id }}"
+                                class="hidden w-20 border border-gray-200 rounded-xl px-3 py-2 text-center
+                                focus:ring-2 focus:ring-[#839958] outline-none">
+                        </td>
+
+                    </form>
+
+                    <!-- AKSI -->
+                    <td class="py-4">
+                        <div class="flex justify-center gap-2">
+
+                            <!-- EDIT -->
+                            <button
+                                type="button"
+                                id="editBtn-{{ $nilai->id }}"
+                                onclick="editNilai('{{ $nilai->id }}')"
+                                class="px-4 py-2 rounded-xl text-xs font-medium
+                                bg-[#839958] hover:bg-[#6f8248]
+                                text-white transition-all duration-300
+                                hover:shadow-md hover:-translate-y-[1px] active:scale-[0.97]">
+                                Edit
+                            </button>
+
+                            <!-- SIMPAN -->
+                            <button
+                                type="submit"
+                                form="nilaiForm-{{ $nilai->id }}"
+                                id="saveBtn-{{ $nilai->id }}"
+                                class="hidden px-4 py-2 rounded-xl text-xs font-medium
+                                bg-[#105666] hover:bg-[#0c4a56]
+                                text-white transition-all duration-300
+                                hover:shadow-md hover:-translate-y-[1px] active:scale-[0.97]">
+                                Simpan
+                            </button>
+
+                        </div>
+                    </td>
+
+                </tr>
+
+                @empty
+
+                <tr>
+                    <td colspan="7" class="text-center py-10 text-gray-400">
+                        Belum ada data nilai
+                    </td>
+                </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
     </div>
 
     <script>

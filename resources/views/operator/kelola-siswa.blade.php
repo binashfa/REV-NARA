@@ -13,399 +13,428 @@
 
 </head>
 
-<body class="bg-slate-100 flex">
+<body class="bg-gradient-to-b from-white via-[#fdfafa] to-[#faf6f6] min-h-screen font-sans antialiased">
 
-    <!-- SIDEBAR -->
-    @include('operator.sidebar')
+    <!-- SIDEBAR FIX -->
+    <div class="fixed top-0 left-0 z-50">
+        @include('operator.sidebar')
+    </div>
 
-    <!-- CONTENT -->
-    <div class="flex-1 p-8">
+    <!-- MAIN -->
+    <main class="ml-[270px] min-h-screen px-6 pt-10 pb-10">
 
-        <!-- HEADER -->
-        <div class="flex justify-between items-center mb-8">
+        <!-- HERO / HEADER -->
+        <div class="mb-10">
+            <div class="relative overflow-hidden rounded-[32px] p-8 md:p-10 flex items-center justify-between
+                shadow-sm hover:shadow-lg transition-all duration-300
+                bg-gradient-to-br from-[#F7F4D5] via-[#f1f5d6] to-[#e9f0d0]">
 
-            <!-- LEFT -->
-            <div>
+                <!-- TOP BORDER -->
+                <div class="absolute top-0 left-0 w-full h-[4px] 
+                    bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-                <h1 class="text-3xl font-bold text-slate-800">
-                    Kelola Siswa
-                </h1>
+                <!-- GLOW -->
+                <div class="absolute -top-16 -right-16 w-40 h-40 bg-[#105666]/10 blur-3xl rounded-full"></div>
+                <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-[#839958]/10 blur-3xl rounded-full"></div>
 
-                <p class="text-slate-500 mt-1">
-                    Data seluruh siswa
-                </p>
+                <!-- TEXT -->
+                <div class="relative z-10 space-y-3">
+
+                    <span class="inline-flex items-center gap-2 bg-white/60 text-[#105666] px-4 py-1.5 rounded-full text-xs font-bold border backdrop-blur-sm shadow-sm">
+                        <i class="fa-solid fa-user-graduate text-[#839958]"></i>
+                        Data Siswa
+                    </span>
+
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#105666]">
+                        Kelola Siswa
+                    </h1>
+
+                    <p class="text-[#105666]/70 text-sm md:text-base font-medium">
+                        Kelola data siswa dengan mudah dan cepat 🎓
+                    </p>
+
+                </div>
+
+                <!-- ACTION + ICON -->
+                <div class="flex items-center gap-4">
+
+                    <!-- IMPORT -->
+                    <button
+                        onclick="openImportModal()"
+                        class="flex items-center gap-2 bg-[#839958] hover:bg-[#6f8248]
+                        text-white px-5 py-3 rounded-2xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98]">
+
+                        <i class="fa-solid fa-upload"></i>
+                        Import CSV
+                    </button>
+
+                    <!-- TAMBAH -->
+                    <button
+                        onclick="openModal()"
+                        class="flex items-center gap-2 bg-[#105666] hover:bg-[#0c4a56]
+                        text-white px-5 py-3 rounded-2xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98]">
+
+                        <i class="fa-solid fa-plus"></i>
+                        Tambah Siswa
+                    </button>
+
+                    <!-- ICON BOX -->
+                    <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl 
+                        shadow-inner items-center justify-center border 
+                        transform rotate-6 hover:rotate-0 transition duration-300">
+
+                        <i class="fa-solid fa-user-graduate text-[#105666] text-3xl"></i>
+                    </div>
+
+                </div>
 
             </div>
-
-            <!-- RIGHT BUTTON -->
-            <div class="flex items-center gap-3">
-
-                <!-- IMPORT -->
-                <button
-                    onclick="openImportModal()"
-                    class="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-xl transition shadow-sm">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-
-                    Import CSV
-
-                </button>
-
-                <!-- TAMBAH -->
-                <button
-                    onclick="openModal()"
-                    class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl transition shadow-sm">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-
-                    Tambah Siswa
-
-                </button>
-
-            </div>
-
         </div>
 
-        <!-- CARD -->
-        <div class="bg-white rounded-3xl shadow-sm p-6">
+<!-- CARD -->
+<div class="bg-white rounded-[32px] shadow-sm p-6 border border-gray-100 relative overflow-hidden">
 
-            <div class="overflow-x-auto">
+    <!-- TOP GRADIENT LINE -->
+    <div class="absolute top-0 left-0 w-full h-[4px] 
+        bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-                <table class="w-full">
+    <div class="overflow-x-auto">
 
-                    <thead>
+        <table class="w-full text-sm">
 
-                        <tr class="border-b text-slate-500">
+            <!-- HEADER -->
+            <thead>
+                <tr class="text-left text-gray-400 border-b-2 border-gray-100 uppercase text-xs tracking-widest">
+                    <th class="py-4 pl-2 font-bold">No</th>
+                    <th class="py-4 font-bold">NISN</th>
+                    <th class="py-4 font-bold">Nama</th>
+                    <th class="py-4 font-bold">Jenis Kelamin</th>
+                    <th class="py-4 text-center font-bold">Aksi</th>
+                </tr>
+            </thead>
 
-                            <th class="text-left py-4">
-                                No
-                            </th>
+            <tbody class="text-gray-700">
 
-                            <th class="text-left py-4">
-                                NISN
-                            </th>
+                @forelse($siswas as $siswa)
 
-                            <th class="text-left py-4">
-                                Nama
-                            </th>
+                <tr class="border-b border-gray-50 transition-all duration-300 hover:bg-[#F7F4D5]/30 group">
 
-                            <th class="text-left py-4">
-                                Jenis Kelamin
-                            </th>
+                    <!-- NO -->
+                    <td class="py-4 pl-2 font-semibold text-gray-600">
+                        {{ $loop->iteration }}
+                    </td>
 
-                        </tr>
+                    <!-- FORM (FIX: pindah ke dalam TD) -->
+                    <td colspan="3" class="p-0">
+                        <form
+                            method="POST"
+                            action="/operator/edit-siswa/{{ $siswa->id }}"
+                            id="siswaForm-{{ $siswa->id }}"
+                            class="grid grid-cols-3 gap-4 items-center">
 
-                    </thead>
+                            @csrf
+                            @method('PUT')
 
-                    <tbody>
+                            <!-- NISN -->
+                            <div class="py-4">
+                                <span id="nisnText-{{ $siswa->id }}" class="text-gray-700">
+                                    {{ $siswa->nisn }}
+                                </span>
 
-                        @forelse($siswas as $siswa)
+                                <input
+                                    type="text"
+                                    name="nisn"
+                                    value="{{ $siswa->nisn }}"
+                                    id="nisnInput-{{ $siswa->id }}"
+                                    class="hidden w-full border border-gray-200 rounded-xl px-4 py-2
+                                    focus:ring-2 focus:ring-[#839958] outline-none">
+                            </div>
 
-                        <tr class="border-b hover:bg-slate-50 transition">
+                            <!-- NAMA -->
+                            <div class="py-4 font-bold text-gray-800">
+                                <span id="namaText-{{ $siswa->id }}">
+                                    {{ $siswa->nama }}
+                                </span>
 
-                            <td class="py-4">
-                                {{ $loop->iteration }}
-                            </td>
+                                <input
+                                    type="text"
+                                    name="nama"
+                                    value="{{ $siswa->nama }}"
+                                    id="namaInput-{{ $siswa->id }}"
+                                    class="hidden w-full border border-gray-200 rounded-xl px-4 py-2
+                                    focus:ring-2 focus:ring-[#839958] outline-none">
+                            </div>
 
+                            <!-- JK -->
+                            <div class="py-4">
+                                <span
+                                    id="jkText-{{ $siswa->id }}"
+                                    class="px-3 py-1.5 rounded-full text-xs font-semibold
+                                    {{ $siswa->jenis_kelamin == 'Laki-laki'
+                                        ? 'bg-[#839958]/20 text-[#5f713f]'
+                                        : 'bg-[#D3968C]/20 text-[#a8645c]'
+                                    }}">
+                                    {{ $siswa->jenis_kelamin }}
+                                </span>
+
+                                <select
+                                    name="jenis_kelamin"
+                                    id="jkInput-{{ $siswa->id }}"
+                                    class="hidden w-full border border-gray-200 rounded-xl px-4 py-2
+                                    focus:ring-2 focus:ring-[#839958] outline-none">
+
+                                    <option value="Laki-laki"
+                                        {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>
+                                        Laki-laki
+                                    </option>
+
+                                    <option value="Perempuan"
+                                        {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>
+                                        Perempuan
+                                    </option>
+
+                                </select>
+                            </div>
+
+                        </form>
+                    </td>
+
+                    <!-- AKSI -->
+                    <td class="py-4">
+                        <div class="flex justify-center gap-2">
+
+                            <!-- EDIT -->
+                            <button
+                                type="button"
+                                id="editBtn-{{ $siswa->id }}"
+                                onclick="editSiswa('{{ $siswa->id }}')"
+                                class="bg-[#839958] hover:bg-[#6f8248] text-white px-4 py-2 rounded-xl text-xs 
+                                transition-all duration-300 hover:shadow-md active:scale-[0.97]">
+                                Edit
+                            </button>
+
+                            <!-- SIMPAN -->
+                            <button
+                                type="submit"
+                                form="siswaForm-{{ $siswa->id }}"
+                                id="saveBtn-{{ $siswa->id }}"
+                                class="hidden bg-[#105666] hover:bg-[#0c4a56] text-white px-4 py-2 rounded-xl text-xs 
+                                transition-all duration-300 hover:shadow-md active:scale-[0.97]">
+                                Simpan
+                            </button>
+
+                            <!-- DELETE -->
                             <form
                                 method="POST"
-                                action="/operator/edit-siswa/{{ $siswa->id }}"
-                                id="siswaForm-{{ $siswa->id }}">
+                                action="/operator/hapus-siswa/{{ $siswa->id }}"
+                                onsubmit="return confirm('Yakin hapus siswa?')">
 
                                 @csrf
-                                @method('PUT')
+                                @method('DELETE')
 
-                                <!-- NISN -->
-                                <td class="py-4">
-
-                                    <span id="nisnText-{{ $siswa->id }}">
-                                        {{ $siswa->nisn }}
-                                    </span>
-
-                                    <input
-                                        type="text"
-                                        name="nisn"
-                                        value="{{ $siswa->nisn }}"
-                                        id="nisnInput-{{ $siswa->id }}"
-                                        class="hidden w-full border border-slate-300 rounded-xl px-4 py-2">
-
-                                </td>
-
-                                <!-- NAMA -->
-                                <td class="py-4">
-
-                                    <span id="namaText-{{ $siswa->id }}">
-                                        {{ $siswa->nama }}
-                                    </span>
-
-                                    <input
-                                        type="text"
-                                        name="nama"
-                                        value="{{ $siswa->nama }}"
-                                        id="namaInput-{{ $siswa->id }}"
-                                        class="hidden w-full border border-slate-300 rounded-xl px-4 py-2">
-
-                                </td>
-
-                                <!-- JK -->
-                                <td class="py-4">
-
-                                    <span
-                                        id="jkText-{{ $siswa->id }}"
-                                        class="px-4 py-2 rounded-full text-sm
-                {{ $siswa->jenis_kelamin == 'Laki-laki'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'bg-pink-100 text-pink-700'
-                }}">
-                                        {{ $siswa->jenis_kelamin }}
-                                    </span>
-
-                                    <select
-                                        name="jenis_kelamin"
-                                        id="jkInput-{{ $siswa->id }}"
-                                        class="hidden w-full border border-slate-300 rounded-xl px-4 py-2">
-
-                                        <option
-                                            value="Laki-laki"
-                                            {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>
-                                            Laki-laki
-                                        </option>
-
-                                        <option
-                                            value="Perempuan"
-                                            {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>
-                                            Perempuan
-                                        </option>
-
-                                    </select>
-
-                                </td>
-
+                                <button
+                                    class="bg-[#D3968C] hover:bg-[#c07f77] text-white px-4 py-2 rounded-xl text-xs 
+                                    transition-all duration-300 hover:shadow-md active:scale-[0.97]">
+                                    Hapus
+                                </button>
 
                             </form>
 
-                            <!-- AKSI -->
-                            <td class="py-4">
+                        </div>
+                    </td>
 
-                                <div class="flex gap-2">
+                </tr>
 
-                                    <!-- EDIT -->
-                                    <button
-                                        type="button"
-                                        id="editBtn-{{ $siswa->id }}"
-                                        onclick="editSiswa('{{ $siswa->id }}')"
-                                        class="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm">
-                                        Edit
-                                    </button>
+                @empty
 
-                                    <!-- SIMPAN -->
-                                    <button
-                                        type="submit"
-                                        form="siswaForm-{{ $siswa->id }}"
-                                        id="saveBtn-{{ $siswa->id }}"
-                                        class="hidden bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm">
-                                        Simpan
-                                    </button>
+                <tr>
+                    <td colspan="5" class="text-center py-10 text-gray-400">
+                        Belum ada data siswa
+                    </td>
+                </tr>
 
-                                    <!-- DELETE -->
-                                    <form
-                                        method="POST"
-                                        action="/operator/hapus-siswa/{{ $siswa->id }}"
-                                        onsubmit="return confirm('Yakin hapus siswa?')">
+                @endforelse
 
-                                        @csrf
-                                        @method('DELETE')
+            </tbody>
 
-                                        <button
-                                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm">
-                                            Hapus
-                                        </button>
-
-                                    </form>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        @empty
-
-                        <tr>
-
-                            <td colspan="6" class="text-center py-10 text-slate-400">
-
-                                Belum ada data siswa
-
-                            </td>
-
-                        </tr>
-
-                        @endforelse
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
+        </table>
 
     </div>
 
-    <!-- MODAL -->
-    <div
-        id="modalTambah"
-        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+</div>
 
-        <div class="bg-white w-[500px] rounded-3xl p-8 shadow-2xl">
+    </div>
 
-            <!-- HEADER -->
-            <div class="flex justify-between items-center mb-6">
+<!-- MODAL TAMBAH -->
+<div
+    id="modalTambah"
+    class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50 p-5 backdrop-blur-sm">
 
-                <h1 class="text-2xl font-bold text-slate-800">
+    <div class="bg-white w-full max-w-lg rounded-[32px] shadow-2xl overflow-hidden relative">
+
+        <!-- HEADER -->
+        <div class="relative px-8 pt-6 pb-5 border-b border-gray-100 bg-gradient-to-br from-[#F7F4D5]/60 via-white to-white">
+
+            <div class="absolute top-0 left-0 w-full h-[4px] 
+                bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
+
+            <div class="flex justify-between items-center">
+
+                <h1 class="text-2xl font-black text-[#105666]">
                     Tambah Siswa
                 </h1>
 
                 <button
                     onclick="closeModal()"
-                    class="text-slate-400 hover:text-red-500 text-2xl">
+                    class="w-10 h-10 rounded-full bg-white border border-gray-100 
+                    hover:bg-[#F7F4D5] flex items-center justify-center 
+                    text-gray-400 hover:text-[#D3968C] text-xl transition-all duration-300">
                     ×
                 </button>
 
             </div>
 
-            <!-- FORM -->
-            <form method="POST" action="/operator/tambah-siswa">
+        </div>
 
-                @csrf
+        <!-- FORM -->
+        <form method="POST" action="/operator/tambah-siswa">
+
+            @csrf
+
+            <div class="p-8 space-y-5">
 
                 <!-- NISN -->
-                <div class="mb-5">
-
-                    <label class="block mb-2 text-slate-600 font-medium">
+                <div>
+                    <label class="block mb-2 text-sm font-semibold text-[#105666]">
                         NISN
                     </label>
 
                     <input
                         type="text"
                         name="nisn"
-                        class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400">
-
+                        placeholder="Masukkan NISN"
+                        class="w-full border border-gray-200 rounded-2xl px-5 py-4 
+                        outline-none bg-white 
+                        focus:ring-2 focus:ring-[#839958] focus:border-[#839958] transition-all duration-300">
                 </div>
 
                 <!-- NAMA -->
-                <div class="mb-5">
-
-                    <label class="block mb-2 text-slate-600 font-medium">
+                <div>
+                    <label class="block mb-2 text-sm font-semibold text-[#105666]">
                         Nama Siswa
                     </label>
 
                     <input
                         type="text"
                         name="nama"
-                        class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400">
-
+                        placeholder="Masukkan nama siswa"
+                        class="w-full border border-gray-200 rounded-2xl px-5 py-4 
+                        outline-none bg-white 
+                        focus:ring-2 focus:ring-[#839958] focus:border-[#839958] transition-all duration-300">
                 </div>
 
                 <!-- JK -->
-                <div class="mb-5">
-
-                    <label class="block mb-2 text-slate-600 font-medium">
+                <div>
+                    <label class="block mb-2 text-sm font-semibold text-[#105666]">
                         Jenis Kelamin
                     </label>
 
                     <select
                         name="jenis_kelamin"
-                        class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-400">
+                        class="w-full border border-gray-200 rounded-2xl px-5 py-4 
+                        outline-none bg-white 
+                        focus:ring-2 focus:ring-[#839958] focus:border-[#839958] transition-all duration-300">
 
-                        <option value="">
-                            Pilih Jenis Kelamin
-                        </option>
-
-                        <option value="Laki-laki">
-                            Laki-laki
-                        </option>
-
-                        <option value="Perempuan">
-                            Perempuan
-                        </option>
+                        <option value="">Pilih Jenis Kelamin</option>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
 
                     </select>
-
                 </div>
 
-                <!-- BUTTON -->
-                <div class="flex justify-end gap-3">
+            </div>
 
-                    <button
-                        type="button"
-                        onclick="closeModal()"
-                        class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
-                        Batal
-                    </button>
+            <!-- FOOTER -->
+            <div class="flex justify-end gap-3 px-8 py-6">
 
-                    <button
-                        type="submit"
-                        class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition">
-                        Simpan
-                    </button>
+                <button
+                    type="button"
+                    onclick="closeModal()"
+                    class="px-6 py-3 rounded-2xl bg-gray-200 hover:bg-gray-300 
+                    transition-all duration-300 font-medium text-gray-700">
+                    Batal
+                </button>
 
-                </div>
+                <button
+                    type="submit"
+                    class="px-7 py-3 rounded-2xl bg-[#105666] hover:bg-[#0c4a56] 
+                    text-white transition-all duration-300 font-medium 
+                    shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98]">
+                    Simpan
+                </button>
 
-            </form>
+            </div>
 
-        </div>
+        </form>
 
     </div>
 
-    <!-- MODAL IMPORT -->
-    <div
-        id="modalImport"
-        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+</div>
 
-        <div class="bg-white w-[450px] rounded-3xl p-8 shadow-2xl">
+<!-- MODAL IMPORT -->
+<div
+    id="modalImport"
+    class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50 p-5 backdrop-blur-sm">
 
-            <div class="flex justify-between items-center mb-6">
+    <div class="bg-white w-full max-w-md rounded-[32px] shadow-2xl overflow-hidden relative">
 
-                <h1 class="text-2xl font-bold text-slate-800">
+        <!-- HEADER -->
+        <div class="relative px-8 pt-6 pb-5 border-b border-gray-100 bg-gradient-to-br from-[#F7F4D5]/60 via-white to-white">
+
+            <div class="absolute top-0 left-0 w-full h-[4px] 
+                bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
+
+            <div class="flex justify-between items-center">
+
+                <h1 class="text-2xl font-black text-[#105666]">
                     Import Data Siswa
                 </h1>
 
                 <button
                     onclick="closeImportModal()"
-                    class="text-2xl text-slate-400 hover:text-red-500">
+                    class="w-10 h-10 rounded-full bg-white border border-gray-100 
+                    hover:bg-[#F7F4D5] flex items-center justify-center 
+                    text-gray-400 hover:text-[#D3968C] text-xl transition-all duration-300">
                     ×
                 </button>
 
             </div>
 
-            <form
-                method="POST"
-                action="/operator/import-siswa"
-                enctype="multipart/form-data">
+        </div>
 
-                @csrf
+        <!-- FORM -->
+        <form
+            method="POST"
+            action="/operator/import-siswa"
+            enctype="multipart/form-data">
+
+            @csrf
+
+            <div class="p-8 space-y-5">
 
                 <!-- TEMPLATE -->
-                <div class="mb-5">
+                <a
+                    href="/operator/template-siswa"
+                    class="inline-flex items-center gap-2 bg-[#839958] hover:bg-[#6f8248] 
+                    text-white px-5 py-3 rounded-2xl transition-all duration-300 shadow-md">
 
-                    <a
-                        href="/operator/template-siswa"
-                        class="inline-block bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl transition">
-                        Download Template
-                    </a>
-
-                </div>
+                    <i class="fa-solid fa-download"></i>
+                    Download Template
+                </a>
 
                 <!-- FILE -->
-                <div class="mb-6">
-
-                    <label class="block mb-2 text-slate-600 font-medium">
+                <div>
+                    <label class="block mb-2 text-sm font-semibold text-[#105666]">
                         Upload File CSV
                     </label>
 
@@ -413,38 +442,41 @@
                         type="file"
                         name="file"
                         accept=".csv"
-                        class="w-full border border-slate-300 rounded-xl p-3">
+                        class="w-full border border-gray-200 rounded-2xl p-3">
 
-                    <p class="text-sm text-slate-400 mt-2">
+                    <p class="text-xs text-gray-400 mt-2">
                         Format file harus CSV sesuai template
                     </p>
-
                 </div>
 
-                <!-- BUTTON -->
-                <div class="flex justify-end gap-3">
+            </div>
 
-                    <button
-                        type="button"
-                        onclick="closeImportModal()"
-                        class="px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition">
-                        Batal
-                    </button>
+            <!-- FOOTER -->
+            <div class="flex justify-end gap-3 px-8 py-6">
 
-                    <button
-                        type="submit"
-                        class="px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition">
-                        Import
-                    </button>
+                <button
+                    type="button"
+                    onclick="closeImportModal()"
+                    class="px-6 py-3 rounded-2xl bg-gray-200 hover:bg-gray-300 
+                    transition-all duration-300 font-medium text-gray-700">
+                    Batal
+                </button>
 
-                </div>
+                <button
+                    type="submit"
+                    class="px-7 py-3 rounded-2xl bg-[#839958] hover:bg-[#6f8248] 
+                    text-white transition-all duration-300 font-medium 
+                    shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98]">
+                    Import
+                </button>
 
-            </form>
+            </div>
 
-        </div>
+        </form>
 
     </div>
 
+</div>
     <script>
         function openModal() {
             document

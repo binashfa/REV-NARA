@@ -1,228 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Operator</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-slate-100 flex">
+<body class="bg-gradient-to-b from-white via-[#fdfafa] to-[#faf6f6] min-h-screen font-sans antialiased">
 
-    @include('operator.sidebar')
+    <!-- SIDEBAR FIX -->
+    <div class="fixed top-0 left-0 z-50">
+        @include('operator.sidebar')
+    </div>
 
-    <div class="flex-1 p-8">
+    <!-- MAIN CONTENT -->
+    <main class="ml-[270px] min-h-screen px-6 pt-10 pb-10 transition-all duration-300">
 
-        <!-- HEADER -->
-        <div class="mb-8">
+        <!-- HERO -->
+        <div class="mb-10">
+            <div class="relative overflow-hidden rounded-[32px] p-10 flex items-center justify-between
+                        shadow-sm hover:shadow-lg transition-all duration-300
+                        bg-gradient-to-br from-[#F7F4D5] via-[#f1f5d6] to-[#e9f0d0]">
 
-            <h1 class="text-3xl font-bold text-slate-800">
-                Dashboard Operator
-            </h1>
+                <div class="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-            <p class="text-slate-500 mt-2">
-                Sistem Akademik Sekolah
-            </p>
+                <!-- GLOW -->
+                <div class="absolute -top-16 -right-16 w-40 h-40 bg-[#105666]/10 blur-3xl rounded-full"></div>
+                <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-[#839958]/10 blur-3xl rounded-full"></div>
 
-        </div>
+                <div class="relative z-10 space-y-3">
+                    <span class="inline-flex items-center gap-2 bg-white/60 text-[#105666] px-4 py-1.5 rounded-full text-xs font-bold border backdrop-blur-sm shadow-sm">
+                        <i class="fa-solid fa-user-gear text-[#839958]"></i>
+                        Operator Aktif
+                    </span>
 
-        <!-- WELCOME -->
-        <div class="bg-gradient-to-r from-indigo-600 to-blue-500 rounded-3xl p-8 text-white shadow-lg mb-8">
+                    <h1 class="text-5xl font-black text-[#105666]">
+                        Dashboard Operator
+                    </h1>
 
-            <h2 class="text-3xl font-bold mb-2">
-                Selamat Datang Operator 👋
-            </h2>
-
-            <p class="text-indigo-100 text-lg">
-                Kelola data akademik sekolah dengan mudah dan cepat
-            </p>
-
-        </div>
-
-        <!-- CARD GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
-            <!-- SISWA -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
-
-                <div class="flex justify-between items-center mb-5">
-
-                    <div>
-
-                        <p class="text-slate-500">
-                            Total Siswa
-                        </p>
-
-                        <h1 class="text-4xl font-bold text-slate-800 mt-2">
-                            {{ $totalSiswa }}
-                        </h1>
-
-                    </div>
-
-                    <div class="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V4H2v16h5m10 0v-5a3 3 0 00-6 0v5m6 0H8"/>
-                        </svg>
-
-                    </div>
-
+                    <p class="text-[#105666]/70 font-medium">
+                        Kelola data akademik sekolah dengan mudah dan cepat 🚀
+                    </p>
                 </div>
 
+                <div>
+                    <div class="w-24 h-24 bg-white/40 backdrop-blur-md rounded-3xl shadow-inner flex items-center justify-center border transform rotate-6 hover:rotate-0 transition duration-300">
+                        <i class="fa-solid fa-database text-[#105666] text-4xl"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CARDS FIX -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+
+            <!-- SISWA -->
+            <div class="group relative bg-white rounded-[28px] overflow-hidden flex items-center h-32
+                transition-all duration-300 ease-in-out
+                hover:-translate-y-1 hover:shadow-lg
+                shadow-sm border border-gray-100">
+
+                <div class="p-6 pr-24 w-full z-10">
+                    <p class="text-sm text-gray-400 mb-1">Total Siswa</p>
+                    <h2 class="text-3xl font-black text-[#105666]">{{ $totalSiswa }}</h2>
+                </div>
+
+                <div class="absolute right-0 top-0 h-full w-32 translate-x-8 bg-[#105666]/80
+                    rounded-l-[60px] transition-all duration-300 ease-in-out
+                    group-hover:translate-x-6 group-hover:brightness-105"></div>
+
+                <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+                    rounded-full flex items-center justify-center
+                    transition-all duration-300 ease-in-out
+                    group-hover:scale-105 border border-white/20">
+                    <i class="fa-solid fa-users text-white text-xl"></i>
+                </div>
             </div>
 
             <!-- GURU -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="group relative bg-white rounded-[28px] overflow-hidden flex items-center h-32
+                transition-all duration-300 ease-in-out
+                hover:-translate-y-1 hover:shadow-lg
+                shadow-sm border border-gray-100">
 
-                <div class="flex justify-between items-center mb-5">
-
-                    <div>
-
-                        <p class="text-slate-500">
-                            Total Guru
-                        </p>
-
-                        <h1 class="text-4xl font-bold text-slate-800 mt-2">
-                            {{ $totalGuru }}
-                        </h1>
-
-                    </div>
-
-                    <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0120 17.944M12 14L5.84 10.578A12.083 12.083 0 004 17.944"/>
-                        </svg>
-
-                    </div>
-
+                <div class="p-6 pr-24 w-full z-10">
+                    <p class="text-sm text-gray-400">Total Guru</p>
+                    <h2 class="text-3xl font-black text-[#105666]">{{ $totalGuru }}</h2>
                 </div>
 
+                <div class="absolute right-0 top-0 h-full w-32 translate-x-8 bg-[#839958]/80
+                    rounded-l-[60px] transition-all duration-300 ease-in-out
+                    group-hover:translate-x-6 group-hover:brightness-105"></div>
+
+                <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+                    rounded-full flex items-center justify-center
+                    transition-all duration-300 ease-in-out
+                    group-hover:scale-105 border border-white/20">
+                    <i class="fa-solid fa-chalkboard-user text-white text-xl"></i>
+                </div>
             </div>
 
             <!-- MAPEL -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="group relative bg-white rounded-[28px] overflow-hidden flex items-center h-32
+                transition-all duration-300 ease-in-out
+                hover:-translate-y-1 hover:shadow-lg
+                shadow-sm border border-gray-100">
 
-                <div class="flex justify-between items-center mb-5">
-
-                    <div>
-
-                        <p class="text-slate-500">
-                            Mata Pelajaran
-                        </p>
-
-                        <h1 class="text-4xl font-bold text-slate-800 mt-2">
-                            {{ $totalMapel }}
-                        </h1>
-
-                    </div>
-
-                    <div class="w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.483 9.246 5 7.5 5S4.168 5.483 3 6.253v13C4.168 18.483 5.754 18 7.5 18s3.332.483 4.5 1.253"/>
-                        </svg>
-
-                    </div>
-
+                <div class="p-6 pr-24 w-full z-10">
+                    <p class="text-sm text-gray-400">Mata Pelajaran</p>
+                    <h2 class="text-3xl font-black text-[#105666]">{{ $totalMapel }}</h2>
                 </div>
 
+                <div class="absolute right-0 top-0 h-full w-32 translate-x-8 bg-[#D3968C]/80
+                    rounded-l-[60px] transition-all duration-300 ease-in-out
+                    group-hover:translate-x-6 group-hover:brightness-105"></div>
+
+                <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+                    rounded-full flex items-center justify-center
+                    transition-all duration-300 ease-in-out
+                    group-hover:scale-105 border border-white/20">
+                    <i class="fa-solid fa-book text-white text-xl"></i>
+                </div>
             </div>
 
             <!-- NILAI -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="group relative bg-white rounded-[28px] overflow-hidden flex items-center h-32
+                transition-all duration-300 ease-in-out
+                hover:-translate-y-1 hover:shadow-lg
+                shadow-sm border border-gray-100">
 
-                <div class="flex justify-between items-center mb-5">
-
-                    <div>
-
-                        <p class="text-slate-500">
-                            Data Nilai
-                        </p>
-
-                        <h1 class="text-4xl font-bold text-slate-800 mt-2">
-                            {{ $totalNilai }}
-                        </h1>
-
-                    </div>
-
-                    <div class="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6m4 6V7m4 10V4"/>
-                        </svg>
-
-                    </div>
-
+                <div class="p-6 pr-24 w-full z-10">
+                    <p class="text-sm text-gray-400">Data Nilai</p>
+                    <h2 class="text-3xl font-black text-[#105666]">{{ $totalNilai }}</h2>
                 </div>
 
+                <div class="absolute right-0 top-0 h-full w-32 translate-x-8 bg-[#105666]/80
+                    rounded-l-[60px] transition-all duration-300 ease-in-out
+                    group-hover:translate-x-6 group-hover:brightness-105"></div>
+
+                <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+                    rounded-full flex items-center justify-center
+                    transition-all duration-300 ease-in-out
+                    group-hover:scale-105 border border-white/20">
+                    <i class="fa-solid fa-chart-line text-white text-xl"></i>
+                </div>
             </div>
 
             <!-- MINAT -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="group relative bg-white rounded-[28px] overflow-hidden flex items-center h-32
+                transition-all duration-300 ease-in-out
+                hover:-translate-y-1 hover:shadow-lg
+                shadow-sm border border-gray-100">
 
-                <div class="flex justify-between items-center mb-5">
-
-                    <div>
-
-                        <p class="text-slate-500">
-                            Data Minat Bakat
-                        </p>
-
-                        <h1 class="text-4xl font-bold text-slate-800 mt-2">
-                            {{ $totalMinat }}
-                        </h1>
-
-                    </div>
-
-                    <div class="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-
-                    </div>
-
+                <div class="p-6 pr-24 w-full z-10">
+                    <p class="text-sm text-gray-400">Minat Bakat</p>
+                    <h2 class="text-3xl font-black text-[#105666]">{{ $totalMinat }}</h2>
                 </div>
 
+                <div class="absolute right-0 top-0 h-full w-32 translate-x-8 bg-[#839958]/80
+                    rounded-l-[60px] transition-all duration-300 ease-in-out
+                    group-hover:translate-x-6 group-hover:brightness-105"></div>
+
+                <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+                    rounded-full flex items-center justify-center
+                    transition-all duration-300 ease-in-out
+                    group-hover:scale-105 border border-white/20">
+                    <i class="fa-solid fa-star text-white text-xl"></i>
+                </div>
             </div>
 
             <!-- KEPRIBADIAN -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="group relative bg-white rounded-[28px] overflow-hidden flex items-center h-32
+                transition-all duration-300 ease-in-out
+                hover:-translate-y-1 hover:shadow-lg
+                shadow-sm border border-gray-100">
 
-                <div class="flex justify-between items-center mb-5">
-
-                    <div>
-
-                        <p class="text-slate-500">
-                            Data Kepribadian
-                        </p>
-
-                        <h1 class="text-4xl font-bold text-slate-800 mt-2">
-                            {{ $totalKepribadian }}
-                        </h1>
-
-                    </div>
-
-                    <div class="w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-
-                    </div>
-
+                <div class="p-6 pr-24 w-full z-10">
+                    <p class="text-sm text-gray-400">Kepribadian</p>
+                    <h2 class="text-3xl font-black text-[#105666]">{{ $totalKepribadian }}</h2>
                 </div>
 
+                <div class="absolute right-0 top-0 h-full w-32 translate-x-8 bg-[#D3968C]/80
+                    rounded-l-[60px] transition-all duration-300 ease-in-out
+                    group-hover:translate-x-6 group-hover:brightness-105"></div>
+
+                <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+                    rounded-full flex items-center justify-center
+                    transition-all duration-300 ease-in-out
+                    group-hover:scale-105 border border-white/20">
+                    <i class="fa-solid fa-user text-white text-xl"></i>
+                </div>
             </div>
 
         </div>
-
-    </div>
+    </main>
 
 </body>
-
 </html>

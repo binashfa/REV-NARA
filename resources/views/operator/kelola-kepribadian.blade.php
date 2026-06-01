@@ -1,231 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Kelola Kepribadian</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
-<body class="bg-slate-100 flex">
+<body class="bg-gradient-to-b from-white via-[#fdfafa] to-[#faf6f6] min-h-screen font-sans antialiased">
 
+<!-- SIDEBAR -->
+<div class="fixed top-0 left-0 z-50">
     @include('operator.sidebar')
+</div>
 
-    <div class="flex-1 p-8">
+<!-- MAIN -->
+<main class="ml-[270px] min-h-screen px-6 pt-10 pb-10">
 
-        <div class="bg-white rounded-3xl shadow-sm p-8">
+    <!-- HERO -->
+    <div class="mb-10">
+        <div class="relative overflow-hidden rounded-[32px] p-8 md:p-10 flex items-center justify-between
+            shadow-sm hover:shadow-lg transition-all duration-300
+            bg-gradient-to-br from-[#F7F4D5] via-[#f1f5d6] to-[#e9f0d0]">
 
-            <!-- HEADER -->
-            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 mb-8">
+            <div class="absolute top-0 left-0 w-full h-[4px] 
+                bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-                <div>
+            <div class="absolute -top-16 -right-16 w-40 h-40 bg-[#105666]/10 blur-3xl rounded-full"></div>
+            <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-[#839958]/10 blur-3xl rounded-full"></div>
 
-                    <h1 class="text-3xl font-bold text-slate-800">
-                        Kelola Kepribadian
-                    </h1>
+            <div class="relative z-10 space-y-3">
 
-                    <p class="text-slate-500 mt-2">
-                        Input nilai kuisioner kepribadian siswa
-                    </p>
+                <span class="inline-flex items-center gap-2 bg-white/60 text-[#105666] px-4 py-1.5 rounded-full text-xs font-bold border">
+                    <i class="fa-solid fa-brain text-[#839958]"></i>
+                    Kepribadian
+                </span>
 
-                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#105666]">
+                    Kelola Kepribadian
+                </h1>
 
-                <div class="flex flex-col md:flex-row gap-3">
-
-                    <!-- TEMPLATE -->
-                    <a
-                        href="/operator/template-kepribadian"
-                        class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-2xl transition shadow-sm text-center"
-                    >
-                        Download Template
-                    </a>
-
-                    <!-- IMPORT -->
-                    <form
-                        method="POST"
-                        action="/operator/import-kepribadian"
-                        enctype="multipart/form-data"
-                        class="flex flex-col md:flex-row items-start md:items-center gap-3"
-                    >
-
-                        @csrf
-
-                        <input
-                            type="file"
-                            name="file"
-                            required
-                            class="border border-slate-300 rounded-xl px-3 py-2 bg-white text-sm"
-                        >
-
-                        <button
-                            type="submit"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-2xl transition shadow-sm"
-                        >
-                            Import CSV
-                        </button>
-
-                    </form>
-
-                </div>
+                <p class="text-[#105666]/70 text-sm">
+                    Input nilai kuisioner kepribadian siswa 🧠
+                </p>
 
             </div>
 
-            <!-- ALERT -->
-            @if(session('success'))
+            <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl 
+                shadow-inner items-center justify-center border 
+                transform rotate-6 hover:rotate-0 transition duration-300">
 
-            <div class="mb-6 bg-green-100 border border-green-200 text-green-700 px-5 py-4 rounded-2xl">
-
-                {{ session('success') }}
-
+                <i class="fa-solid fa-brain text-[#105666] text-3xl"></i>
             </div>
 
-            @endif
+        </div>
+    </div>
 
-            <!-- TABLE -->
-            <form
-                method="POST"
-                action="/operator/simpan-kepribadian"
-            >
+    <!-- ACTION -->
+    <div class="flex flex-col md:flex-row gap-3 mb-6">
 
-                @csrf
+        <a href="/operator/template-kepribadian"
+            class="bg-[#839958] hover:bg-[#6f8248] text-white px-5 py-3 rounded-2xl transition shadow-md text-center">
+            Download Template
+        </a>
 
-                <div class="overflow-x-auto rounded-2xl border border-slate-200">
+        <form method="POST" action="/operator/import-kepribadian" enctype="multipart/form-data"
+            class="flex flex-col md:flex-row items-start md:items-center gap-3">
 
-                    <table class="w-full text-sm">
+            @csrf
 
-                        <thead class="bg-slate-100 text-slate-700">
+            <input
+                type="file"
+                name="file"
+                required
+                class="border border-gray-200 rounded-xl px-3 py-2 bg-white text-sm">
 
-                            <tr>
+            <button
+                type="submit"
+                class="bg-[#105666] hover:bg-[#0c4a56] text-white px-5 py-3 rounded-2xl transition shadow-md">
+                Import CSV
+            </button>
 
-                                <th class="border-b px-4 py-4 text-center">
-                                    No
-                                </th>
+        </form>
 
-                                <th class="border-b px-4 py-4 text-left min-w-[250px]">
-                                    Nama
-                                </th>
+    </div>
 
-                                <th class="border-b px-4 py-4 text-center">
-                                    NISN
-                                </th>
+    <!-- ALERT -->
+    @if(session('success'))
+    <div class="mb-6 bg-[#839958]/20 border border-[#839958]/40 text-[#5f713f] px-5 py-4 rounded-2xl">
+        {{ session('success') }}
+    </div>
+    @endif
 
-                                @foreach($pertanyaans as $pertanyaan)
+    <!-- FORM -->
+    <form method="POST" action="/operator/simpan-kepribadian">
+        @csrf
 
-                                <th class="border-b px-4 py-4 text-center min-w-[90px]">
+        <div class="bg-white rounded-[32px] shadow-sm p-6 border border-gray-100 relative overflow-hidden">
 
-                                    <div class="font-bold text-indigo-600">
-                                        {{ $loop->iteration }}
-                                    </div>
+            <div class="absolute top-0 left-0 w-full h-[4px] 
+                bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-                                </th>
+            <div class="overflow-x-auto">
 
-                                @endforeach
+                <table class="w-full text-sm">
 
-                                <th class="border-b px-4 py-4 text-center min-w-[180px]">
-                                    Hasil
-                                </th>
+                    <!-- HEADER -->
+                    <thead>
+                        <tr class="text-left text-gray-400 border-b-2 border-gray-100 uppercase text-xs">
+                            <th class="py-4 text-center">No</th>
+                            <th class="py-4">Nama</th>
+                            <th class="py-4 text-center">NISN</th>
 
-                            </tr>
+                            @foreach($pertanyaans as $pertanyaan)
+                            <th class="py-4 text-center">
+                                {{ $loop->iteration }}
+                            </th>
+                            @endforeach
 
-                        </thead>
+                            <th class="py-4 text-center">Hasil</th>
+                        </tr>
+                    </thead>
 
-                        <tbody class="bg-white">
+                    <!-- BODY -->
+                    <tbody>
 
-                            @foreach($siswas as $siswa)
+                        @foreach($siswas as $siswa)
 
-                            <tr class="hover:bg-slate-50 transition">
+                        <tr class="border-b hover:bg-[#F7F4D5]/30 transition-all">
 
-                                <!-- NO -->
-                                <td class="border-b px-4 py-4 text-center text-slate-500">
+                            <td class="py-4 text-center text-gray-600">
+                                {{ $loop->iteration }}
+                            </td>
 
-                                    {{ $loop->iteration }}
+                            <td class="py-4 font-semibold text-[#105666]">
+                                {{ $siswa->nama }}
+                            </td>
 
-                                </td>
+                            <td class="py-4 text-center text-gray-600">
+                                {{ $siswa->nisn }}
+                            </td>
 
-                                <!-- NAMA -->
-                                <td class="border-b px-4 py-4">
+                            @foreach($pertanyaans as $pertanyaan)
 
-                                    <div class="font-semibold text-slate-700">
-                                        {{ $siswa->nama }}
-                                    </div>
+                            <td class="py-2 text-center">
 
-                                </td>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="4"
+                                    value="{{ $jawabans[$siswa->id . '-' . $pertanyaan->id]->nilai ?? '' }}"
+                                    name="jawaban[{{ $siswa->id }}][{{ $pertanyaan->id }}]"
+                                    class="w-14 border border-gray-200 rounded-xl px-2 py-2 text-center 
+                                    focus:ring-2 focus:ring-[#839958] outline-none">
 
-                                <!-- NISN -->
-                                <td class="border-b px-4 py-4 text-center text-slate-600">
-
-                                    {{ $siswa->nisn }}
-
-                                </td>
-
-                                <!-- INPUT -->
-                                @foreach($pertanyaans as $pertanyaan)
-
-                                <td class="border-b px-2 py-3 text-center">
-
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        max="4"
-                                        value="{{ $jawabans[$siswa->id . '-' . $pertanyaan->id]->nilai ?? '' }}"
-                                        name="jawaban[{{ $siswa->id }}][{{ $pertanyaan->id }}]"
-                                        class="w-16 border border-slate-300 rounded-xl px-2 py-2 text-center outline-none focus:ring-2 focus:ring-indigo-400"
-                                    >
-
-                                </td>
-
-                                @endforeach
-
-                                <!-- HASIL -->
-                                <td class="border-b px-4 py-4 text-center">
-
-                                    @if($siswa->hasilKepribadian)
-
-                                    <span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold">
-
-                                        {{ $siswa->hasilKepribadian->hasil }}
-
-                                    </span>
-
-                                    @else
-
-                                    <span class="text-slate-400">
-                                        Belum Ada
-                                    </span>
-
-                                    @endif
-
-                                </td>
-
-                            </tr>
+                            </td>
 
                             @endforeach
 
-                        </tbody>
+                            <!-- HASIL -->
+                            <td class="py-4 text-center">
 
-                    </table>
+                                @if($siswa->hasilKepribadian)
 
-                </div>
+                                <span class="bg-[#105666]/10 text-[#105666] px-4 py-2 rounded-full text-sm font-semibold">
+                                    {{ $siswa->hasilKepribadian->hasil }}
+                                </span>
 
-                <!-- BUTTON -->
-                <div class="mt-8 flex justify-end">
+                                @else
 
-                    <button
-                        type="submit"
-                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl transition shadow-sm font-medium"
-                    >
-                        Simpan Hasil
-                    </button>
+                                <span class="text-gray-400">
+                                    Belum Ada
+                                </span>
 
-                </div>
+                                @endif
 
-            </form>
+                            </td>
+
+                        </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
-    </div>
+        <!-- BUTTON -->
+        <div class="mt-8 flex justify-end">
+
+            <button
+                type="submit"
+                class="bg-[#105666] hover:bg-[#0c4a56] text-white px-8 py-4 rounded-2xl 
+                transition shadow-md hover:shadow-lg hover:-translate-y-[1px]">
+                Simpan Hasil
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
 
 </body>
 
