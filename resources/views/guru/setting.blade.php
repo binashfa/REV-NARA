@@ -8,16 +8,16 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-gradient-to-b from-white via-[#fdfafa] to-[#faf6f6] min-h-screen">
+<body class="bg-gradient-to-b from-white via-[#fdfafa] to-[#faf6f6] min-h-screen font-sans antialiased">
 
 @include('guru.sidebar')
 
-<main class="max-w-7xl mx-auto px-4 md:px-6 pt-8 pb-16">
+<main class="max-w-7xl mx-auto px-4 md:px-6 pt-4 md:pt-8 pb-16">
 
-    <!-- HEADER -->
-    <header class="mb-8 md:mb-12">
+    <header class="mb-6 md:mb-12">
         <div class="w-full bg-gradient-to-br from-[#105666] to-[#0d4b59] 
                     rounded-[24px] md:rounded-[32px] 
                     p-6 md:p-12 
@@ -26,15 +26,12 @@
                     transition-all duration-300
                     hover:shadow-2xl hover:-translate-y-[2px]">
 
-            <!-- GLOW -->
             <div class="absolute top-0 right-0 w-60 h-60 md:w-80 md:h-80 bg-[#839958]/20 rounded-full blur-3xl -mr-10 -mt-10 md:-mr-20 md:-mt-20"></div>
             <div class="absolute bottom-0 left-1/4 md:left-1/3 w-40 h-40 md:w-60 md:h-60 bg-[#D3968C]/20 rounded-full blur-3xl"></div>
 
-            <!-- TEXT -->
             <div class="relative z-10 space-y-3 md:space-y-4">
 
-                <!-- BADGE -->
-                <span class="inline-flex items-center gap-2 
+                <span class="inline-flex items-center gap-1.5 md:gap-2 
                             bg-white/10 text-[#F7F4D5] 
                             text-[10px] md:text-xs font-semibold 
                             px-3 py-1.5 rounded-full 
@@ -45,19 +42,16 @@
 
                 </span>
 
-                <!-- TITLE -->
                 <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
                     Setting Guru
                 </h1>
 
-                <!-- DESC -->
                 <p class="text-gray-200 text-xs md:text-sm lg:text-base font-medium max-w-md leading-relaxed">
                     Kelola akun dan profil guru dengan mudah dalam satu dashboard.
                 </p>
 
             </div>
 
-            <!-- ICON -->
             <div class="hidden md:flex relative z-10 items-center justify-center pr-4 lg:pr-6">
                 <div class="w-20 h-20 lg:w-24 lg:h-24 
                             bg-white/10 backdrop-blur-md 
@@ -75,95 +69,90 @@
         </div>
     </header>
 
-    <!-- CARD FULL -->
     <section class="w-full">
 
-        <div class="relative overflow-hidden rounded-[32px] p-8 md:p-10
+        <div class="relative overflow-hidden rounded-[24px] md:rounded-[32px] p-5 sm:p-6 md:p-10
                     bg-white border border-gray-200
                     shadow-sm hover:shadow-lg transition">
 
-            <!-- GARIS ATAS -->
             <div class="absolute top-0 left-0 w-full h-[4px] 
                         bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
             <div class="relative z-10 w-full">
 
                 @if(session('success'))
-                <div class="mb-6 bg-[#eaf3d6] text-[#839958] px-5 py-4 rounded-2xl font-medium">
+                <div class="mb-6 bg-[#eaf3d6] text-[#839958] px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl text-sm md:text-base font-medium">
                     {{ session('success') }}
                 </div>
                 @endif
 
-                <form method="POST" action="/guru/update-setting" class="space-y-8">
+                <form id="settingForm" method="POST" action="/guru/update-setting" class="space-y-6 md:space-y-8">
                     @csrf
 
-                    <!-- GRID -->
-                    <div class="grid md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
 
-                        <!-- NAMA -->
                         <div>
-                            <label class="block text-sm font-semibold text-[#105666] mb-2">
+                            <label class="block text-sm font-semibold text-[#105666] mb-1.5 md:mb-2">
                                 Nama Guru
                             </label>
 
                             <input type="text" name="nama"
                                 value="{{ $guru->nama }}"
-                                class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 md:py-3 outline-none text-sm md:text-base
                                        focus:ring-2 focus:ring-[#105666]/30 focus:border-[#105666]
                                        transition">
                         </div>
 
-                        <!-- USERNAME -->
                         <div>
-                            <label class="block text-sm font-semibold text-[#105666] mb-2">
+                            <label class="block text-sm font-semibold text-[#105666] mb-1.5 md:mb-2">
                                 Username
                             </label>
 
                             <input type="text" name="username"
                                 value="{{ Auth::user()->username }}"
-                                class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 md:py-3 outline-none text-sm md:text-base
                                        focus:ring-2 focus:ring-[#839958]/30 focus:border-[#839958]
                                        transition">
                         </div>
 
-                        <!-- PASSWORD -->
                         <div>
-                            <label class="block text-sm font-semibold text-[#105666] mb-2">
+                            <label class="block text-sm font-semibold text-[#105666] mb-1.5 md:mb-2">
                                 Password Baru
                             </label>
 
-                            <input type="password" name="password"
+                            <input type="password" id="password" name="password"
                                 placeholder="Kosongkan jika tidak diubah"
-                                class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 md:py-3 outline-none text-sm md:text-base
                                        focus:ring-2 focus:ring-[#D3968C]/30 focus:border-[#D3968C]
-                                       transition">
+                                       transition placeholder-gray-400">
                         </div>
 
-                        <!-- KONFIRMASI -->
                         <div>
-                            <label class="block text-sm font-semibold text-[#105666] mb-2">
+                            <label class="block text-sm font-semibold text-[#105666] mb-1.5 md:mb-2">
                                 Konfirmasi Password
                             </label>
 
-                            <input type="password" name="password_confirmation"
+                            <input type="password" id="password_confirmation" name="password_confirmation"
                                 placeholder="Ulangi password baru"
-                                class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 md:py-3 outline-none text-sm md:text-base
                                        focus:ring-2 focus:ring-[#D3968C]/30 focus:border-[#D3968C]
-                                       transition">
+                                       transition placeholder-gray-400">
+                            
+                            <p id="errorPasswordMsg" class="text-red-500 text-xs mt-2 hidden flex items-center gap-1 font-medium">
+                                <i class="fa-solid fa-circle-exclamation"></i> Konfirmasi password tidak cocok!
+                            </p>
                         </div>
 
                     </div>
 
-                    <!-- BUTTON -->
-                    <div class="flex justify-end pt-4">
+                    <div class="flex justify-end pt-2 md:pt-4">
 
                         <button type="submit"
-                            class="px-8 py-3 rounded-xl bg-[#D3968C] text-white font-semibold
+                            class="w-full md:w-auto px-8 py-3 rounded-xl bg-[#D3968C] text-white font-semibold text-sm md:text-base
                                    hover:bg-[#c07f75] transition shadow-sm
-                                   hover:shadow-md hover:-translate-y-[1px]">
-
+                                   hover:shadow-md hover:-translate-y-[1px] flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-save"></i>
                             Simpan Perubahan
-
                         </button>
 
                     </div>
@@ -177,6 +166,32 @@
     </section>
 
 </main>
+
+<script>
+    document.getElementById('settingForm').addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('password_confirmation').value;
+        const errorMsg = document.getElementById('errorPasswordMsg');
+
+        // Validasi hanya berjalan jika field password diisi oleh user
+        if (password.length > 0 || confirmPassword.length > 0) {
+            if (password !== confirmPassword) {
+                e.preventDefault(); // Menghentikan submit form ke backend
+                errorMsg.classList.remove('hidden'); // Memunculkan pesan teks merah
+                document.getElementById('password_confirmation').focus(); // Fokus otomatis ke kolom konfirmasi
+            } else {
+                errorMsg.classList.add('hidden'); // Sembunyikan jika pas
+            }
+        }
+    });
+
+    document.getElementById('password_confirmation').addEventListener('input', function() {
+        const password = document.getElementById('password').value;
+        if (this.value === password) {
+            document.getElementById('errorPasswordMsg').add('hidden');
+        }
+    });
+</script>
 
 </body>
 </html>

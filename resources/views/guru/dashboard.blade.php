@@ -14,10 +14,8 @@
 
 @include('guru.sidebar')
 
-<!-- MAIN TANPA FLEX -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 pt-24 md:pt-10 pb-10">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 md:pt-10 pb-10">
 
-<!-- HEADER -->
 <header class="mb-8 md:mb-12">
     <div class="w-full 
                 bg-gradient-to-br from-[#F7F4D5] via-[#f1f5d6] to-[#e9f0d0]
@@ -28,18 +26,14 @@
                 transition-all duration-300
                 hover:shadow-xl hover:-translate-y-[2px]">
 
-        <!-- GARIS ATAS -->
         <div class="absolute top-0 left-0 w-full h-[4px] 
                     bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
-        <!-- GLOW -->
         <div class="absolute top-0 right-0 w-60 h-60 md:w-80 md:h-80 bg-[#105666]/10 rounded-full blur-3xl -mr-10 -mt-10 md:-mr-20 md:-mt-20"></div>
         <div class="absolute bottom-0 left-1/4 md:left-1/3 w-40 h-40 md:w-60 md:h-60 bg-[#839958]/10 rounded-full blur-3xl"></div>
 
-        <!-- TEXT -->
         <div class="relative z-10 space-y-3 md:space-y-4">
 
-            <!-- BADGE -->
             <span class="inline-flex items-center gap-1.5 md:gap-2 
                         bg-white/30 text-[#105666] 
                         text-[10px] md:text-xs font-semibold 
@@ -51,19 +45,16 @@
 
             </span>
 
-            <!-- TITLE -->
             <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-[#105666] tracking-tight leading-tight">
                 Dashboard Guru
             </h1>
 
-            <!-- DESC -->
             <p class="text-[#105666]/70 text-xs md:text-sm lg:text-base font-medium max-w-md leading-relaxed">
                 Selamat datang kembali, {{ $guru->nama }}
             </p>
 
         </div>
 
-        <!-- ICON -->
         <div class="hidden md:flex relative z-10 items-center justify-center pr-4 lg:pr-6">
             <div class="w-20 h-20 lg:w-24 lg:h-24 
                         bg-white/40 backdrop-blur-md 
@@ -81,84 +72,75 @@
     </div>
 </header>
 
-    <!-- CARD -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
 
-        <!-- SISWA -->
-        <div class="group relative bg-white rounded-3xl overflow-hidden flex items-center h-32
+        <div class="group relative bg-white rounded-[24px] md:rounded-3xl overflow-hidden flex items-center h-28 md:h-32
                     transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1
                     shadow-sm hover:shadow-[0_12px_30px_rgba(131,153,88,0.15),0_4px_12px_rgba(131,153,88,0.05)] border">
 
-            <div class="p-6 pr-24 w-full z-10">
-                <p class="text-sm text-gray-400">Total Siswa</p>
-                <h2 class="text-3xl font-black text-[#105666]">
+            <div class="p-5 md:p-6 pr-20 md:pr-24 w-full z-10">
+                <p class="text-xs md:text-sm text-gray-400">Total Siswa</p>
+                <h2 class="text-2xl md:text-3xl font-black text-[#105666]">
                     {{ $jumlahSiswa }}
                 </h2>
             </div>
 
-            <!-- FIX SMOOTH -->
-            <div class="absolute right-0 top-0 h-full w-32 translate-x-6 bg-[#839958] rounded-l-[60px]
+            <div class="absolute right-0 top-0 h-full w-24 md:w-32 translate-x-4 md:translate-x-6 bg-[#839958] rounded-l-[40px] md:rounded-l-[60px]
                         transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
                         group-hover:translate-x-3 group-hover:brightness-110"></div>
 
-            <!-- ICON -->
-            <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+            <div class="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 h-14 bg-white/10 backdrop-blur-sm
                         rounded-full flex items-center justify-center
                         transition-all duration-300 ease-out
                         group-hover:scale-110 group-hover:-translate-x-0.5 border border-white/20">
-                <i class="fa-solid fa-users text-white text-xl"></i>
+                <i class="fa-solid fa-users text-white text-lg md:text-xl"></i>
             </div>
 
         </div>
 
-    <!-- NILAI -->
-    <div class="group relative bg-white rounded-3xl overflow-hidden flex items-center h-32
+    <div class="group relative bg-white rounded-[24px] md:rounded-3xl overflow-hidden flex items-center h-28 md:h-32
                 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1
                 shadow-sm hover:shadow-[0_12px_30px_rgba(211,150,140,0.20),0_4px_12px_rgba(211,150,140,0.10)] border">
 
-        <div class="p-6 pr-24 w-full z-10">
-            <p class="text-sm text-gray-400">Total Nilai</p>
-            <h2 class="text-3xl font-black text-[#105666]">
+        <div class="p-5 md:p-6 pr-20 md:pr-24 w-full z-10">
+            <p class="text-xs md:text-sm text-gray-400">Total Nilai</p>
+            <h2 class="text-2xl md:text-3xl font-black text-[#105666]">
                 {{ $jumlahNilai }}
             </h2>
         </div>
 
-        <!-- FIX SMOOTH -->
-        <div class="absolute right-0 top-0 h-full w-32 translate-x-6 bg-[#D3968C] rounded-l-[60px]
+        <div class="absolute right-0 top-0 h-full w-24 md:w-32 translate-x-4 md:translate-x-6 bg-[#D3968C] rounded-l-[40px] md:rounded-l-[60px]
                     transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
                     group-hover:translate-x-3 group-hover:brightness-110"></div>
 
-        <!-- ICON -->
-        <div class="absolute right-5 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm
+        <div class="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 h-14 bg-white/10 backdrop-blur-sm
                     rounded-full flex items-center justify-center
                     transition-all duration-300 ease-out
                     group-hover:scale-110 group-hover:-translate-x-0.5 border border-white/20">
-            <i class="fa-solid fa-chart-column text-white text-xl"></i>
+            <i class="fa-solid fa-chart-column text-white text-lg md:text-xl"></i>
         </div>
 
     </div>
 
 </div>
 
-<!-- TABLE -->
-<div class="bg-white rounded-[32px] border shadow-sm relative overflow-hidden
+<div class="bg-white rounded-[24px] md:rounded-[32px] border shadow-sm relative overflow-hidden
             transition-all duration-300 hover:shadow-lg">
 
-    <!-- HEADER (FIX TOTAL) -->
     <div class="bg-gradient-to-r from-[#105666] to-[#839958]
-                px-8 py-6">
+                px-5 md:px-8 py-5 md:py-6">
 
         <div class="flex justify-between items-center">
 
-            <h2 class="text-xl md:text-2xl font-black text-white flex items-center gap-3">
-                <span class="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center">
-                    <i class="fa-solid fa-file-signature text-white"></i>
+            <h2 class="text-lg md:text-2xl font-black text-white flex items-center gap-2 md:gap-3">
+                <span class="w-9 h-9 md:w-11 md:h-11 rounded-lg md:rounded-xl bg-white/20 flex items-center justify-center">
+                    <i class="fa-solid fa-file-signature text-white text-sm md:text-base"></i>
                 </span>
                 Nilai Terbaru
             </h2>
 
             <a href="/guru/kelola-nilai"
-               class="text-sm font-semibold text-white/80 hover:text-white transition flex items-center gap-1">
+               class="text-xs md:text-sm font-semibold text-white/80 hover:text-white transition flex items-center gap-1 whitespace-nowrap">
                 Lihat Semua →
             </a>
 
@@ -166,17 +148,16 @@
 
     </div>
 
-    <!-- ISI TABLE -->
-    <div class="p-8">
+    <div class="p-4 md:p-8">
 
         <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+            <table class="w-full text-sm whitespace-nowrap md:whitespace-normal">
 
                 <thead>
-                    <tr class="text-left text-gray-400 border-b border-gray-100 uppercase text-xs tracking-widest">
-                        <th class="py-3 font-bold">Nama Siswa</th>
-                        <th class="py-3 font-bold">Mapel</th>
-                        <th class="py-3 font-bold text-center">Nilai</th>
+                    <tr class="text-left text-gray-400 border-b border-gray-100 uppercase text-[10px] md:text-xs tracking-widest">
+                        <th class="py-3 pr-4 md:pr-0 font-bold">Nama Siswa</th>
+                        <th class="py-3 px-4 md:px-0 font-bold">Mapel</th>
+                        <th class="py-3 pl-4 md:pl-0 font-bold text-center">Nilai</th>
                     </tr>
                 </thead>
 
@@ -186,27 +167,24 @@
                     <tr class="border-b border-gray-50 transition-all duration-300
                                hover:bg-gradient-to-r hover:from-[#F7F4D5]/40 hover:to-transparent group">
 
-                        <!-- NAMA -->
-                        <td class="py-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-[#e9f0d0] text-[#839958] flex items-center justify-center
-                                            transition-transform duration-300 group-hover:scale-105">
-                                    <i class="fa-solid fa-user text-xs"></i>
+                        <td class="py-3 md:py-4 pr-4 md:pr-0">
+                            <div class="flex items-center gap-2 md:gap-3">
+                                <div class="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-[#e9f0d0] text-[#839958] flex items-center justify-center
+                                            transition-transform duration-300 group-hover:scale-105 min-w-[28px]">
+                                    <i class="fa-solid fa-user text-[10px] md:text-xs"></i>
                                 </div>
-                                <p class="font-bold text-gray-800">
+                                <p class="font-bold text-gray-800 text-xs md:text-sm">
                                     {{ $nilai->siswa->nama }}
                                 </p>
                             </div>
                         </td>
 
-                        <!-- MAPEL -->
-                        <td class="py-4 text-gray-500 font-medium">
+                        <td class="py-3 md:py-4 px-4 md:px-0 text-gray-500 font-medium text-xs md:text-sm">
                             {{ $nilai->mapel->nama_mapel }}
                         </td>
 
-                        <!-- NILAI -->
-                        <td class="py-4 text-center">
-                            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold
+                        <td class="py-3 md:py-4 pl-4 md:pl-0 text-center">
+                            <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold
                                          bg-[#eef6f6] text-[#105666]
                                          shadow-sm transition-all duration-300
                                          group-hover:scale-105 group-hover:shadow-md">
