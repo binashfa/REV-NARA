@@ -10,7 +10,7 @@ class AuthService {
 
     final response = await http.post(
       Uri.parse(
-        'http://192.168.1.73:8000/api/login',
+        'http://10.21.76.222:8000/api/login',
       ),
       headers: {
         'Accept': 'application/json',

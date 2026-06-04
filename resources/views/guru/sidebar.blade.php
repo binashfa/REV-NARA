@@ -71,6 +71,15 @@
                     </li>
 
                     <li>
+                        <a href="/guru/promethee"
+                            class="flex items-center gap-2 px-5 py-2 rounded-full transition
+                            {{ request()->is('guru/promethee*') ? 'bg-[#105666] text-white' : 'text-[#105666] hover:bg-[#f3f7f6]' }}">
+                            <i class="fa-solid fa-ranking-star"></i>
+                            PROMETHEE
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="/guru/setting"
                             class="flex items-center gap-2 px-5 py-2 rounded-full transition
                             {{ request()->is('guru/setting*') ? 'bg-[#105666] text-white' : 'text-[#105666] hover:bg-[#f3f7f6]' }}">
@@ -78,6 +87,7 @@
                             Setting
                         </a>
                     </li>
+
 
                 </ul>
 
@@ -148,12 +158,20 @@
                 Raport
             </a>
 
+            <a href="/guru/promethee"
+                class="flex items-center gap-2 px-4 py-2 rounded-lg transition
+                {{ request()->is('guru/promethee*') ? 'bg-[#105666] text-white' : 'text-[#105666]' }}">
+                <i class="fa-solid fa-ranking-star"></i>
+                PROMETHEE
+            </a>
+
             <a href="/guru/setting"
                 class="flex items-center gap-2 px-4 py-2 rounded-lg transition
                 {{ request()->is('guru/setting*') ? 'bg-[#105666] text-white' : 'text-[#105666]' }}">
                 <i class="fa-solid fa-gear"></i>
                 Setting
             </a>
+
 
         </div>
 

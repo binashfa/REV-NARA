@@ -389,17 +389,26 @@ class OperatorController extends Controller
         );
     }
 
-    public function kelolaNilai()
+    public function kelolaNilai(Request $request)
     {
-        $nilais = Nilai::with([
-            'siswa',
-            'guru',
-            'mapel'
-        ])->get();
+        $mapels = Mapel::all();
+
+        $nilais = collect(); // kosong
+
+        if ($request->filled('mapel_id')) {
+
+            $nilais = Nilai::with([
+                'siswa',
+                'guru',
+                'mapel'
+            ])
+                ->where('mapel_id', $request->mapel_id)
+                ->get();
+        }
 
         return view(
             'operator.kelola-nilai',
-            compact('nilais')
+            compact('nilais', 'mapels')
         );
     }
 
@@ -889,6 +898,7 @@ class OperatorController extends Controller
         fclose($file);
         return back()->with('success', 'Import kepribadian berhasil');
     }
+    
 
 
     public function setting()

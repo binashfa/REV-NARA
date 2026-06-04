@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/custom_header.dart';
 import '../widgets/stat_card.dart';
-import '../widgets/nilai_terbaru_card.dart';
 import 'login_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -29,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.1.73:8000/api/guru/dashboard'),
+        Uri.parse('http://10.21.76.222:8000/api/guru/dashboard'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -190,9 +189,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       icon: Icons.bar_chart,
                     ),
 
-                    const SizedBox(height: 25),
-
-                    NilaiTerbaruCard(nilai: data['nilai_terbaru'] ?? []),
+                    
                   ],
                 ),
               ),

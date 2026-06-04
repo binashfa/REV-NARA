@@ -61,7 +61,51 @@
             <div class="absolute top-0 left-0 w-full h-[4px] 
                 bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
 
+            <div class="mb-5 flex flex-wrap items-center gap-3">
+
+                <form method="GET" class="mb-5">
+
+                    <select
+                        name="mapel_id"
+                        onchange="this.form.submit()"
+                        class="px-4 py-2 rounded-xl border border-gray-200">
+
+                        <option value="" selected disabled>
+                            Pilih Mapel
+                        </option>
+
+                        @foreach($mapels as $mapel)
+
+                        <option
+                            value="{{ $mapel->id }}"
+                            {{ request('mapel_id') == $mapel->id ? 'selected' : '' }}>
+
+                            {{ $mapel->nama_mapel }}
+
+                        </option>
+
+                        @endforeach
+
+                    </select>
+
+                </form>
+
+            </div>
+
             <div class="overflow-x-auto pb-2">
+                @if(!request()->filled('mapel_id'))
+
+                <div class="text-center py-16">
+
+                    <i class="fa-solid fa-book text-5xl text-gray-300 mb-4"></i>
+
+                    <p class="text-gray-400 font-medium">
+                        Silakan pilih mapel terlebih dahulu
+                    </p>
+
+                </div>
+
+                @else
 
                 <table class="w-full text-sm min-w-[700px] whitespace-nowrap md:whitespace-normal">
 
@@ -97,7 +141,7 @@
                                     px-2 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-semibold">
 
                                     <i class="fa-solid fa-book text-[8px] md:text-[10px]"></i>
-                                    {{ $nilai->guru->mapel->nama_mapel }}
+                                    {{ $nilai->mapel->nama_mapel }}
 
                                 </span>
                             </td>
@@ -206,6 +250,10 @@
                     </tbody>
 
                 </table>
+
+
+                @endif
+
 
             </div>
 

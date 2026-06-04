@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;   
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PrometheeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,8 @@ Route::middleware(['role:guru'])->group(function () {
 
     Route::get('/guru/setting', [GuruController::class, 'setting']);
     Route::post('/guru/update-setting', [GuruController::class, 'updateSetting']);
+
+    Route::get('/guru/promethee', [PrometheeController::class, 'promethee']);
 });
 
 /*

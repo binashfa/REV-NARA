@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../pages/dashboard_page.dart';
+import '../../pages/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final response = await http.post(
         Uri.parse(
-          'http://192.168.1.73:8000/api/login',
+          'http://10.21.76.222:8000/api/login',
         ),
         headers: {
           'Accept': 'application/json',
