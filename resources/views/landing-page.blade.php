@@ -22,22 +22,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1a1a1a;ov
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(16,86,102,0.97);backdrop-filter:blur(12px)}
-.nav-logo{
-    display:flex;
-    align-items:center;
-}
-
-.nav-logo-img{
-    height:40px;
-    width:auto;
-    object-fit:contain;
-    transition:.3s;
-}
-
-.nav-logo-img:hover{
-    transform:scale(1.08) translateY(-2px);
-    filter:drop-shadow(0 8px 25px rgba(16,86,102,.25));
-}
+.nav-logo{display:flex;align-items:center;}
+.nav-logo-img{height:40px;width:auto;object-fit:contain;transition:.3s;}
+.nav-logo-img:hover{transform:scale(1.08) translateY(-2px);filter:drop-shadow(0 8px 25px rgba(16,86,102,.25));}
 .nav-logo-icon{width:36px;height:36px;background:var(--cream);border-radius:8px;display:flex;align-items:center;justify-content:center}
 .nav-logo-icon i{color:var(--teal);font-size:20px}
 .nav-logo-text{font-family:'Playfair Display',serif;font-size:18px;color:var(--cream);font-weight:700}
@@ -204,17 +191,8 @@ footer strong{color:rgba(247,244,213,0.7)}
 
 <!-- NAV -->
 <nav>
-    <a href="#" class="nav-logo">
-        <img
-            src="/images/logoNara.png"
-            alt="NARA"
-            class="nav-logo-img">
-    </a>
-
-    <p class="text-white text-sm md:text-base font-extrabold">
-    NARA - Learning Management System dengan Metode PROMETHEE untuk Rekomendasi Jurusan
-</p>
-
+    <a href="#" class="nav-logo"><img src="/images/logoNara.png" alt="NARA" class="nav-logo-img"></a>
+    <p class="text-white text-sm md:text-base font-extrabold"> NARA - Learning Management System dengan Metode PROMETHEE untuk Rekomendasi Jurusan </p>
     <a href="/login" class="nav-cta">Masuk</a>
 </nav>
 
@@ -570,5 +548,6 @@ footer strong{color:rgba(247,244,213,0.7)}
   <p style="margin-top:6px">MTs Wali Songo Asy-Syirbaany · Ciputat, Tangerang Selatan · Berbasis Metode PROMETHEE</p>
 </footer>
 
+@include('idle-video')
 </body>
 </html>

@@ -654,7 +654,7 @@ class OperatorController extends Controller
 
         while (($row = fgetcsv($file)) !== false) {
 
-            $nisn = $row[1];
+            $nisn = str_replace("'", "", trim($row[1]));
 
             $siswa = Siswa::where(
                 'nisn',
@@ -711,31 +711,34 @@ class OperatorController extends Controller
 
             foreach ($jawaban as $pertanyaan_id => $nilai) {
 
-                // LEWATI JIKA KOSONG
                 if ($nilai === '' || $nilai === null) {
                     continue;
                 }
 
-                // UBAH KE INTEGER
                 $nilai = (int) $nilai;
 
                 $pertanyaan = Pertanyaan::find($pertanyaan_id);
 
                 JawabanMinat::updateOrCreate(
-
                     [
                         'siswa_id' => $siswa->id,
                         'pertanyaan_id' => $pertanyaan_id
                     ],
-
                     [
                         'nilai' => $nilai
                     ]
-
                 );
 
                 $skor[$pertanyaan->kategori] += $nilai;
             }
+
+
+            $skor['IPA'] /= 2;
+            $skor['IPS'] /= 2;
+            $skor['TKJ'] /= 2;
+            $skor['DKV'] /= 2;
+            $skor['Akuntansi'] /= 2;
+            $skor['Pondok Pesantren'] /= 2;
 
             $hasil = array_search(
                 max($skor),

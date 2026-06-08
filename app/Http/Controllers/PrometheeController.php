@@ -428,17 +428,7 @@ class PrometheeController extends Controller
 
         $nilaiAkademikJurusan = [];
 
-        $rataAkademik = 0;
-
-        $mapelTerbaik = '-';
-
         $nilaiMapelTerbaik = 0;
-
-        $nilaiPerMapel = [];
-
-        $hasilMinat = '-';
-
-        $hasilKepribadian = '-';
 
         $rekomendasiJurusan = null;
 
@@ -566,16 +556,6 @@ class PrometheeController extends Controller
                 $akademikJurusan[$jurusan] = 1;
             }
         }
-
-        // ==========================
-        // HASIL DOMINAN
-        // ==========================
-
-        $hasilMinat =
-            $siswa->hasilMinat->hasil ?? '-';
-
-        $hasilKepribadian =
-            $siswa->hasilKepribadian->hasil ?? '-';
 
         // ==========================
         // ALTERNATIF

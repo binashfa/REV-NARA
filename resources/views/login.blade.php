@@ -128,5 +128,7 @@
             }
         });
     </script>
+
+    @include('idle-video')
 </body>
 </html>
