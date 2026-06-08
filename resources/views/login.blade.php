@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="text-right mb-5 sm:mb-6 lg:mb-6">
-                        <a href="#" class="text-xs text-white/60 underline hover:text-[#D3968C] transition-colors">Forgot Password?</a>
+                        <a href="/forgot-password" class="text-xs text-white/60 underline hover:text-[#D3968C] transition-colors">Forgot Password?</a>
                     </div>
 
                     <button type="submit" class="w-full h-[46px] rounded-full bg-[#D3968C] font-bold text-white hover:bg-[#c48479] hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98] transition-all duration-300 tracking-wide">

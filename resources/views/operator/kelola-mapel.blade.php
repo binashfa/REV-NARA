@@ -53,27 +53,12 @@
 
                 </div>
 
-                <!-- ACTION + ICON -->
-                <div class="flex items-center gap-4 w-full md:w-auto z-10 mt-2 md:mt-0">
-
-                    <!-- BUTTON TAMBAH -->
-                    <button
-                        onclick="openModalMapel()"
-                        class="flex w-full md:w-auto items-center justify-center gap-2 bg-[#105666] hover:bg-[#0c4a56]
-                        text-white px-5 py-3 rounded-xl md:rounded-2xl transition shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98] text-sm md:text-base">
-
-                        <i class="fa-solid fa-plus"></i>
-                        Tambah Mapel
-                    </button>
-
-                    <!-- ICON BOX -->
-                    <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl shrink-0
+                <!-- ICON BOX -->
+                <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl shrink-0
                         shadow-inner items-center justify-center border 
                         transform rotate-6 hover:rotate-0 transition duration-300">
 
-                        <i class="fa-solid fa-book text-[#105666] text-3xl"></i>
-                    </div>
-
+                    <i class="fa-solid fa-book text-[#105666] text-3xl"></i>
                 </div>
 
             </div>
@@ -207,98 +192,8 @@
 
     </main>
 
-    <!-- MODAL TAMBAH MAPEL -->
-    <div
-        id="modalMapel"
-        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50 p-4 md:p-5 backdrop-blur-sm">
-
-        <div class="bg-white w-full max-w-lg rounded-[24px] md:rounded-[32px] shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar relative">
-
-            <!-- HEADER MODAL -->
-            <div class="relative px-6 md:px-8 pt-6 pb-4 md:pb-5 border-b border-gray-100 bg-gradient-to-br from-[#F7F4D5]/60 via-white to-white sticky top-0 z-20">
-
-                <div class="absolute top-0 left-0 w-full h-[4px] 
-                    bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C] rounded-t-[24px] md:rounded-t-[32px]"></div>
-
-                <div class="flex justify-between items-center">
-
-                    <h1 class="text-xl md:text-2xl font-black text-[#105666]">
-                        Tambah Mapel
-                    </h1>
-
-                    <button
-                        onclick="closeModalMapel()"
-                        class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border border-gray-100 
-                        hover:bg-[#F7F4D5] flex items-center justify-center 
-                        text-gray-400 hover:text-[#D3968C] text-lg md:text-xl transition-all duration-300 shrink-0">
-                        ×
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- FORM -->
-            <form method="POST" action="/operator/tambah-mapel">
-
-                @csrf
-
-                <div class="p-5 md:p-8">
-
-                    <label class="block mb-1.5 md:mb-2 text-xs md:text-sm font-semibold text-[#105666]">
-                        Nama Mata Pelajaran
-                    </label>
-
-                    <input
-                        type="text"
-                        name="nama_mapel"
-                        required
-                        placeholder="Masukkan nama mapel"
-                        class="w-full border border-gray-200 rounded-xl md:rounded-2xl px-4 py-3 md:py-4 
-                        outline-none bg-white text-sm md:text-base
-                        focus:ring-2 focus:ring-[#839958] focus:border-[#839958] transition-all duration-300">
-
-                </div>
-
-                <!-- FOOTER -->
-                <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 px-5 sm:px-8 py-5 sm:py-6 border-t border-gray-50 bg-gray-50/50">
-
-                    <button
-                        type="button"
-                        onclick="closeModalMapel()"
-                        class="w-full sm:w-auto px-6 py-3 rounded-xl md:rounded-2xl bg-gray-200 hover:bg-gray-300 
-                        transition-all duration-300 font-medium text-gray-700 text-sm md:text-base">
-                        Batal
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="w-full sm:w-auto px-7 py-3 rounded-xl md:rounded-2xl bg-[#105666] hover:bg-[#0c4a56] 
-                        text-white transition-all duration-300 font-medium text-sm md:text-base
-                        shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98]">
-                        Simpan
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
     <!-- SCRIPT -->
     <script>
-        function openModalMapel() {
-            document.getElementById('modalMapel').classList.remove('hidden');
-            document.getElementById('modalMapel').classList.add('flex');
-        }
-
-        function closeModalMapel() {
-            document.getElementById('modalMapel').classList.remove('flex');
-            document.getElementById('modalMapel').classList.add('hidden');
-        }
-
         function editMapel(id) {
             document.getElementById('text-' + id).classList.add('hidden');
             document.getElementById('form-' + id).classList.remove('hidden');
@@ -307,9 +202,18 @@
         }
     </script>
     <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
     </style>
 
 </body>

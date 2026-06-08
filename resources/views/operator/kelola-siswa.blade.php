@@ -103,81 +103,85 @@
 
                         <tr class="border-b border-gray-50 transition-all duration-300 hover:bg-[#F7F4D5]/30 group text-xs md:text-sm">
 
+                        <tr class="border-b border-gray-50 transition-all duration-300 hover:bg-[#F7F4D5]/30 group text-xs md:text-sm">
+
                             <td class="py-3 md:py-4 pl-2 font-semibold text-gray-600 align-middle">
                                 {{ $loop->iteration }}
                             </td>
 
-                            <td colspan="3" class="p-0 align-middle">
-                                <form
-                                    method="POST"
-                                    action="/operator/edit-siswa/{{ $siswa->id }}"
-                                    id="siswaForm-{{ $siswa->id }}"
-                                    class="grid grid-cols-3 gap-2 md:gap-4 items-center w-full">
+                            <form
+                                method="POST"
+                                action="/operator/edit-siswa/{{ $siswa->id }}"
+                                id="siswaForm-{{ $siswa->id }}">
 
-                                    @csrf
-                                    @method('PUT')
+                                @csrf
+                                @method('PUT')
 
-                                    <div class="py-2 md:py-4 px-2">
-                                        <span id="nisnText-{{ $siswa->id }}" class="text-gray-700 block min-w-[80px]">
-                                            {{ $siswa->nisn }}
-                                        </span>
+                                <!-- NISN -->
+                                <td class="py-3 md:py-4 align-middle">
+                                    <span id="nisnText-{{ $siswa->id }}">
+                                        {{ $siswa->nisn }}
+                                    </span>
 
-                                        <input
-                                            type="text"
-                                            name="nisn"
-                                            value="{{ $siswa->nisn }}"
-                                            id="nisnInput-{{ $siswa->id }}"
-                                            class="hidden w-full border border-gray-200 rounded-lg md:rounded-xl px-3 py-1.5 md:py-2
-                                            focus:ring-2 focus:ring-[#839958] outline-none">
-                                    </div>
+                                    <input
+                                        type="text"
+                                        name="nisn"
+                                        value="{{ $siswa->nisn }}"
+                                        id="nisnInput-{{ $siswa->id }}"
+                                        class="hidden w-full border border-gray-200 rounded-xl px-3 py-2
+            focus:ring-2 focus:ring-[#839958] outline-none">
+                                </td>
 
-                                    <div class="py-2 md:py-4 px-2 font-bold text-gray-800">
-                                        <span id="namaText-{{ $siswa->id }}" class="block min-w-[120px]">
-                                            {{ $siswa->nama }}
-                                        </span>
+                                <!-- NAMA -->
+                                <td class="py-3 md:py-4 font-bold text-gray-800 align-middle">
+                                    <span id="namaText-{{ $siswa->id }}">
+                                        {{ $siswa->nama }}
+                                    </span>
 
-                                        <input
-                                            type="text"
-                                            name="nama"
-                                            value="{{ $siswa->nama }}"
-                                            id="namaInput-{{ $siswa->id }}"
-                                            class="hidden w-full border border-gray-200 rounded-lg md:rounded-xl px-3 py-1.5 md:py-2
-                                            focus:ring-2 focus:ring-[#839958] outline-none font-normal">
-                                    </div>
+                                    <input
+                                        type="text"
+                                        name="nama"
+                                        value="{{ $siswa->nama }}"
+                                        id="namaInput-{{ $siswa->id }}"
+                                        class="hidden w-full border border-gray-200 rounded-xl px-3 py-2
+            focus:ring-2 focus:ring-[#839958] outline-none">
+                                </td>
 
-                                    <div class="py-2 md:py-4 px-2">
-                                        <span
-                                            id="jkText-{{ $siswa->id }}"
-                                            class="inline-block px-3 py-1.5 rounded-full text-[10px] md:text-xs font-semibold
-                                            {{ $siswa->jenis_kelamin == 'Laki-laki'
-                                                ? 'bg-[#839958]/20 text-[#5f713f]'
-                                                : 'bg-[#D3968C]/20 text-[#a8645c]'
-                                            }}">
-                                            {{ $siswa->jenis_kelamin }}
-                                        </span>
+                                <!-- JK -->
+                                <td class="py-3 md:py-4 align-middle">
 
-                                        <select
-                                            name="jenis_kelamin"
-                                            id="jkInput-{{ $siswa->id }}"
-                                            class="hidden w-full border border-gray-200 rounded-lg md:rounded-xl px-3 py-1.5 md:py-2
-                                            focus:ring-2 focus:ring-[#839958] outline-none">
+                                    <span
+                                        id="jkText-{{ $siswa->id }}"
+                                        class="inline-block px-3 py-1.5 rounded-full text-xs font-semibold
+            {{ $siswa->jenis_kelamin == 'Laki-laki'
+                ? 'bg-[#839958]/20 text-[#5f713f]'
+                : 'bg-[#D3968C]/20 text-[#a8645c]' }}">
+                                        {{ $siswa->jenis_kelamin }}
+                                    </span>
 
-                                            <option value="Laki-laki"
-                                                {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>
-                                                Laki-laki
-                                            </option>
+                                    <select
+                                        name="jenis_kelamin"
+                                        id="jkInput-{{ $siswa->id }}"
+                                        class="hidden w-full border border-gray-200 rounded-xl px-3 py-2
+            focus:ring-2 focus:ring-[#839958] outline-none">
 
-                                            <option value="Perempuan"
-                                                {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>
-                                                Perempuan
-                                            </option>
+                                        <option value="Laki-laki"
+                                            {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>
+                                            Laki-laki
+                                        </option>
 
-                                        </select>
-                                    </div>
+                                        <option value="Perempuan"
+                                            {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>
+                                            Perempuan
+                                        </option>
 
-                                </form>
-                            </td>
+                                    </select>
 
+                                </td>
+
+                            </form>
+
+                            <!-- AKSI -->
                             <td class="py-3 md:py-4 align-middle">
                                 <div class="flex justify-center gap-2">
 
@@ -185,8 +189,7 @@
                                         type="button"
                                         id="editBtn-{{ $siswa->id }}"
                                         onclick="editSiswa('{{ $siswa->id }}')"
-                                        class="bg-[#839958] hover:bg-[#6f8248] text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs 
-                                        transition-all duration-300 hover:shadow-md active:scale-[0.97]">
+                                        class="bg-[#839958] hover:bg-[#6f8248] text-white px-4 py-2 rounded-xl text-xs">
                                         Edit
                                     </button>
 
@@ -194,8 +197,7 @@
                                         type="submit"
                                         form="siswaForm-{{ $siswa->id }}"
                                         id="saveBtn-{{ $siswa->id }}"
-                                        class="hidden bg-[#105666] hover:bg-[#0c4a56] text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs 
-                                        transition-all duration-300 hover:shadow-md active:scale-[0.97]">
+                                        class="hidden bg-[#105666] hover:bg-[#0c4a56] text-white px-4 py-2 rounded-xl text-xs">
                                         Simpan
                                     </button>
 
@@ -208,8 +210,7 @@
                                         @method('DELETE')
 
                                         <button
-                                            class="bg-[#D3968C] hover:bg-[#c07f77] text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs 
-                                            transition-all duration-300 hover:shadow-md active:scale-[0.97]">
+                                            class="bg-[#D3968C] hover:bg-[#c07f77] text-white px-4 py-2 rounded-xl text-xs">
                                             Hapus
                                         </button>
 
@@ -217,6 +218,7 @@
 
                                 </div>
                             </td>
+
 
                         </tr>
 
@@ -478,9 +480,18 @@
         }
     </script>
     <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
     </style>
 </body>
 

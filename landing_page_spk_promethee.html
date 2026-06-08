@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#105666;
+  --teal-light:#1a7a8e;
+  --olive:#839958;
+  --olive-light:#a0b870;
+  --cream:#F7F4D5;
+  --salmon:#D3968C;
+  --salmon-light:#e0a89f;
+  --dark:#0d2e36;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1a1a1a;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(16,86,102,0.97);backdrop-filter:blur(12px)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:36px;height:36px;background:var(--cream);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo-icon i{color:var(--teal);font-size:20px}
+.nav-logo-text{font-family:'Playfair Display',serif;font-size:18px;color:var(--cream);font-weight:700}
+.nav-cta{background:var(--salmon);color:#fff;border:none;padding:8px 22px;border-radius:24px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;transition:background .2s}
+.nav-cta:hover{background:var(--salmon-light)}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(135deg,var(--teal) 0%,#0d3d4a 50%,#0a2d37 100%);display:flex;align-items:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg-circle{position:absolute;border-radius:50%;opacity:.08;pointer-events:none}
+.hero-bg-circle.c1{width:600px;height:600px;background:var(--cream);top:-200px;right:-150px}
+.hero-bg-circle.c2{width:400px;height:400px;background:var(--olive);bottom:-100px;left:-100px}
+.hero-bg-circle.c3{width:180px;height:180px;background:var(--salmon);bottom:80px;right:100px;opacity:.15}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(247,244,213,0.12);border:1px solid rgba(247,244,213,0.25);color:var(--cream);font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;margin-bottom:1.5rem}
+.hero-badge i{color:var(--olive-light);font-size:14px}
+h1.hero-title{font-family:'Playfair Display',serif;font-size:52px;line-height:1.1;color:var(--cream);margin-bottom:1.25rem;font-weight:900}
+h1.hero-title span{color:var(--salmon-light)}
+.hero-sub{font-size:16px;line-height:1.7;color:rgba(247,244,213,0.75);margin-bottom:2rem;max-width:480px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--salmon);color:#fff;padding:13px 30px;border-radius:30px;font-weight:600;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-primary:hover{background:var(--salmon-light);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--cream);padding:13px 30px;border-radius:30px;font-weight:600;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(247,244,213,0.35);transition:all .2s}
+.btn-secondary:hover{border-color:var(--cream);background:rgba(247,244,213,0.08)}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+.stat-box{background:rgba(247,244,213,0.07);border:1px solid rgba(247,244,213,0.15);border-radius:12px;padding:1rem;text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--cream)}
+.stat-lbl{font-size:12px;color:rgba(247,244,213,0.6);margin-top:2px}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-card-main{background:rgba(247,244,213,0.1);border:1px solid rgba(247,244,213,0.2);border-radius:24px;padding:2rem;backdrop-filter:blur(10px);width:100%;max-width:360px}
+.hero-card-header{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
+.hero-card-header-icon{width:40px;height:40px;background:var(--salmon);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.hero-card-header-icon i{color:#fff;font-size:20px}
+.hero-card-title{color:var(--cream);font-weight:600;font-size:14px}
+.hero-card-sub{color:rgba(247,244,213,0.55);font-size:12px}
+.rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(247,244,213,0.1)}
+.rank-item:last-child{border-bottom:none}
+.rank-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.rank-1{background:var(--salmon);color:#fff}
+.rank-2{background:var(--olive);color:#fff}
+.rank-3{background:rgba(247,244,213,0.2);color:var(--cream)}
+.rank-label{flex:1;font-size:13px;color:var(--cream);font-weight:500}
+.rank-bar-wrap{flex:1;max-width:80px}
+.rank-bar{height:6px;border-radius:3px;background:rgba(247,244,213,0.15)}
+.rank-bar-fill{height:6px;border-radius:3px;transition:width .4s}
+.rank-score{font-size:12px;color:rgba(247,244,213,0.6);min-width:32px;text-align:right}
+
+/* ABOUT */
+.about{padding:6rem 2rem;background:#fafaf7}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(131,153,88,0.12);color:var(--olive);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.05em}
+h2.section-title{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;color:var(--dark);line-height:1.2;margin-bottom:1.25rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:3rem}
+.about-text p{font-size:15px;line-height:1.8;color:#4a5568;margin-bottom:1rem}
+.highlight-box{background:var(--teal);color:var(--cream);border-radius:16px;padding:1.5rem;margin-top:1.5rem}
+.highlight-box p{color:rgba(247,244,213,0.85);font-size:14px;margin-bottom:0}
+.highlight-box strong{color:var(--cream);font-weight:600}
+.about-cards{display:flex;flex-direction:column;gap:1rem}
+.info-card{background:#fff;border:1px solid #e8e4d0;border-radius:14px;padding:1.25rem;display:flex;align-items:flex-start;gap:12px}
+.info-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-card-icon.teal{background:rgba(16,86,102,0.1)}
+.info-card-icon.olive{background:rgba(131,153,88,0.12)}
+.info-card-icon.salmon{background:rgba(211,150,140,0.12)}
+.info-card-icon.teal i{color:var(--teal)}
+.info-card-icon.olive i{color:var(--olive)}
+.info-card-icon.salmon i{color:var(--salmon)}
+.info-card-title{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:3px}
+.info-card-desc{font-size:13px;color:#718096;line-height:1.5}
+
+/* FEATURES */
+.features{padding:6rem 2rem;background:#fff}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.feature-card{border:1px solid #e8e4d0;border-radius:20px;padding:1.75rem;transition:all .25s;background:#fff}
+.feature-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 12px 32px rgba(16,86,102,0.1)}
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+.feature-icon.teal{background:rgba(16,86,102,0.1)}
+.feature-icon.olive{background:rgba(131,153,88,0.12)}
+.feature-icon.salmon{background:rgba(211,150,140,0.12)}
+.feature-icon.teal i{color:var(--teal);font-size:24px}
+.feature-icon.olive i{color:var(--olive);font-size:24px}
+.feature-icon.salmon i{color:var(--salmon);font-size:24px}
+.feature-title{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.feature-desc{font-size:14px;color:#718096;line-height:1.6}
+
+/* METHOD */
+.method{padding:6rem 2rem;background:#f0f5f3}
+.method-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:3rem;position:relative}
+.method-steps::before{content:'';position:absolute;top:30px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--teal),var(--olive));opacity:.3;z-index:0}
+.step-card{background:#fff;border:1px solid #dde8e2;border-radius:16px;padding:1.25rem 1rem;text-align:center;position:relative;z-index:1}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--teal);color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem}
+.step-title{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px}
+.step-desc{font-size:11px;color:#718096;line-height:1.4}
+
+/* CRITERIA */
+.criteria{padding:6rem 2rem;background:#fff}
+.criteria-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:3rem}
+.crit-card{background:#fafaf7;border:1px solid #e8e4d0;border-radius:14px;padding:1.25rem;display:flex;align-items:flex-start;gap:12px}
+.crit-badge{width:34px;height:34px;border-radius:8px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.crit-label{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:3px}
+.crit-type{font-size:12px;color:#718096}
+.crit-type span{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
+.crit-type .benefit{background:rgba(131,153,88,0.12);color:var(--olive)}
+.crit-type .cost{background:rgba(211,150,140,0.15);color:#b07068}
+
+/* RESEARCH */
+.research{padding:6rem 2rem;background:linear-gradient(135deg,var(--teal) 0%,#0d3d4a 100%);position:relative;overflow:hidden}
+.research::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(247,244,213,0.05);top:-200px;right:-150px;pointer-events:none}
+.research-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.research-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.research-text .section-tag{background:rgba(247,244,213,0.12);color:var(--cream)}
+.research-text h2{color:var(--cream)}
+.research-text p{color:rgba(247,244,213,0.75);font-size:15px;line-height:1.8;margin-bottom:1rem}
+.research-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.res-stat{background:rgba(247,244,213,0.08);border:1px solid rgba(247,244,213,0.15);border-radius:14px;padding:1.25rem;text-align:center}
+.res-stat-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--cream)}
+.res-stat-lbl{font-size:12px;color:rgba(247,244,213,0.6);margin-top:4px}
+.keyword-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+.keyword{background:rgba(247,244,213,0.1);border:1px solid rgba(247,244,213,0.2);color:var(--cream);font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500}
+
+/* ROLES */
+.roles{padding:6rem 2rem;background:#fafaf7}
+.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.role-card{border-radius:20px;overflow:hidden;border:1px solid #e8e4d0;background:#fff}
+.role-header{padding:1.5rem;display:flex;align-items:center;gap:12px}
+.role-header.admin{background:var(--teal)}
+.role-header.teacher{background:var(--olive)}
+.role-header.student{background:var(--salmon)}
+.role-icon{width:44px;height:44px;background:rgba(247,244,213,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.role-icon i{color:#fff;font-size:22px}
+.role-name{color:#fff;font-weight:700;font-size:16px}
+.role-sub{color:rgba(255,255,255,0.7);font-size:12px}
+.role-body{padding:1.25rem}
+.role-feature{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;font-size:13px;color:#4a5568;line-height:1.4}
+.role-feature i{color:var(--olive);font-size:14px;margin-top:2px;flex-shrink:0}
+
+/* CTA */
+.cta{padding:6rem 2rem;background:#fff;text-align:center}
+.cta-box{max-width:600px;margin:0 auto}
+.cta-box h2{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--dark);margin-bottom:1rem}
+.cta-box p{font-size:16px;color:#718096;margin-bottom:2rem;line-height:1.7}
+.cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{background:var(--dark);padding:2.5rem 2rem;text-align:center}
+footer p{color:rgba(247,244,213,0.4);font-size:13px}
+footer strong{color:rgba(247,244,213,0.7)}
+
+@media(max-width:768px){
+  .hero-inner,.about-grid,.features-grid,.method-steps,.criteria-grid,.research-grid,.roles-grid{grid-template-columns:1fr}
+  h1.hero-title{font-size:36px}
+  h2.section-title{font-size:28px}
+  .hero-visual{display:none}
+  .method-steps::before{display:none}
+}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Landing page sistem pendukung keputusan pemilihan jurusan berbasis LMS dan metode PROMETHEE untuk MTs Wali Songo Asy-Syirbaany</h2>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon"><i class="ti ti-school" aria-hidden="true"></i></div>
+    <span class="nav-logo-text">EduPath SPK</span>
+  </a>
+  <a href="#login" class="nav-cta">Masuk</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-bg-circle c3"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="ti ti-stars" aria-hidden="true"></i> Berbasis Metode PROMETHEE</div>
+      <h1 class="hero-title">Temukan Jurusan<br><span>Terbaik</span> untuk<br>Masa Depanmu</h1>
+      <p class="hero-sub">Sistem pendukung keputusan cerdas yang membantu siswa MTs memilih jurusan dan sekolah lanjutan secara objektif berdasarkan nilai akademik, minat, dan kepribadian.</p>
+      <div class="hero-actions">
+        <a href="#login" class="btn-primary"><i class="ti ti-login" aria-hidden="true"></i> Masuk ke Sistem</a>
+        <a href="#fitur" class="btn-secondary"><i class="ti ti-info-circle" aria-hidden="true"></i> Pelajari Lebih Lanjut</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="stat-num">27</div>
+          <div class="stat-lbl">Siswa Diuji</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">100%</div>
+          <div class="stat-lbl">Akurasi Sistem</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">MTs</div>
+          <div class="stat-lbl">Wali Songo</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="hero-card-header">
+          <div class="hero-card-header-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+          <div>
+            <div class="hero-card-title">Hasil Rekomendasi</div>
+            <div class="hero-card-sub">Berdasarkan Net Flow PROMETHEE</div>
+          </div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num rank-1">1</div>
+          <div class="rank-label">IPA / MIPA</div>
+          <div class="rank-bar-wrap"><div class="rank-bar"><div class="rank-bar-fill" style="width:92%;background:var(--salmon)"></div></div></div>
+          <div class="rank-score">0.92</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num rank-2">2</div>
+          <div class="rank-label">IPS / Sosial</div>
+          <div class="rank-bar-wrap"><div class="rank-bar"><div class="rank-bar-fill" style="width:61%;background:var(--olive)"></div></div></div>
+          <div class="rank-score">0.61</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num rank-3">3</div>
+          <div class="rank-label">Kejuruan / SMK</div>
+          <div class="rank-bar-wrap"><div class="rank-bar"><div class="rank-bar-fill" style="width:38%;background:rgba(247,244,213,0.3)"></div></div></div>
+          <div class="rank-score">0.38</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="tentang">
+  <div class="section-inner">
+    <div class="section-tag"><i class="ti ti-info-circle" aria-hidden="true"></i> Tentang Sistem</div>
+    <h2 class="section-title">Mengapa Perlu Sistem<br>Pendukung Keputusan?</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Pemilihan jurusan dan sekolah lanjutan merupakan salah satu keputusan paling penting bagi siswa tingkat Madrasah Tsanawiyah (MTs). Kesalahan dalam memilih jurusan dapat menyebabkan ketidaksesuaian antara kemampuan akademik, minat, dan kepribadian siswa.</p>
+        <p>Dampaknya tidak ringan — rendahnya motivasi belajar, penurunan prestasi, hingga rasa tidak nyaman di lingkungan belajar. Keputusan ini membutuhkan pendekatan yang objektif, terstruktur, dan berbasis data.</p>
+        <div class="highlight-box">
+          <p><strong>Sistem ini dikembangkan di MTs Wali Songo Asy-Syirbaany</strong>, Ciputat, Tangerang Selatan — sebagai Learning Management System (LMS) yang dilengkapi fitur Sistem Pendukung Keputusan (SPK) untuk memberikan rekomendasi jurusan yang akurat dan terpercaya.</p>
+        </div>
+      </div>
+      <div class="about-cards">
+        <div class="info-card">
+          <div class="info-card-icon teal"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+          <div>
+            <div class="info-card-title">Lokasi Penelitian</div>
+            <div class="info-card-desc">MTs Wali Songo Asy-Syirbaany, Ciputat, Tangerang Selatan</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon olive"><i class="ti ti-algorithm" aria-hidden="true"></i></div>
+          <div>
+            <div class="info-card-title">Metode yang Digunakan</div>
+            <div class="info-card-desc">PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluation) — metode perankingan multikriteria</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon salmon"><i class="ti ti-database" aria-hidden="true"></i></div>
+          <div>
+            <div class="info-card-title">Data yang Diproses</div>
+            <div class="info-card-desc">Nilai akademik dari guru, data minat dan kepribadian siswa melalui kuesioner yang dikelola operator</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon teal"><i class="ti ti-users" aria-hidden="true"></i></div>
+          <div>
+            <div class="info-card-title">Pengujian Sistem</div>
+            <div class="info-card-desc">Diuji pada 27 siswa dengan hasil perhitungan sistem yang sama persis dengan perhitungan manual</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="fitur">
+  <div class="section-inner">
+    <div class="section-tag"><i class="ti ti-layout-grid" aria-hidden="true"></i> Fitur Unggulan</div>
+    <h2 class="section-title">Semua yang Dibutuhkan<br>dalam Satu Platform</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon teal"><i class="ti ti-brain" aria-hidden="true"></i></div>
+        <div class="feature-title">Rekomendasi Jurusan Otomatis</div>
+        <div class="feature-desc">Sistem mengolah data secara otomatis menggunakan metode PROMETHEE dan menghasilkan perankingan alternatif jurusan untuk setiap siswa secara objektif.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon olive"><i class="ti ti-book" aria-hidden="true"></i></div>
+        <div class="feature-title">Learning Management System</div>
+        <div class="feature-desc">Platform LMS lengkap terintegrasi dengan fitur SPK, memungkinkan pengelolaan pembelajaran dan pengambilan keputusan dalam satu sistem terpadu.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon salmon"><i class="ti ti-file-analytics" aria-hidden="true"></i></div>
+        <div class="feature-title">Input Nilai oleh Guru</div>
+        <div class="feature-desc">Guru dapat menginput nilai akademik siswa secara langsung. Data ini menjadi salah satu kriteria utama dalam proses perhitungan PROMETHEE.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon olive"><i class="ti ti-clipboard-list" aria-hidden="true"></i></div>
+        <div class="feature-title">Kuesioner Minat & Kepribadian</div>
+        <div class="feature-desc">Siswa mengisi kuesioner minat dan kepribadian yang kemudian dikelola operator sebagai data pelengkap dalam proses rekomendasi.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon teal"><i class="ti ti-chart-line" aria-hidden="true"></i></div>
+        <div class="feature-title">Perankingan Multikriteria</div>
+        <div class="feature-desc">Perhitungan otomatis meliputi nilai preferensi, indeks preferensi, leaving flow, entering flow, dan net flow sebagai dasar penentuan peringkat.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon salmon"><i class="ti ti-check-circle" aria-hidden="true"></i></div>
+        <div class="feature-title">Hasil Akurat & Terverifikasi</div>
+        <div class="feature-desc">Hasil sistem telah diverifikasi dengan perhitungan manual dan terbukti menghasilkan output yang sama, membuktikan keakuratan sistem.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="method" id="metode">
+  <div class="section-inner">
+    <div class="section-tag"><i class="ti ti-settings" aria-hidden="true"></i> Alur Metode PROMETHEE</div>
+    <h2 class="section-title">Bagaimana Sistem Bekerja?</h2>
+    <div class="method-steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Input Data</div>
+        <div class="step-desc">Nilai akademik, minat, dan kepribadian siswa diinput ke sistem</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Nilai Preferensi</div>
+        <div class="step-desc">Sistem menghitung nilai preferensi antar pasang alternatif per kriteria</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Indeks Preferensi</div>
+        <div class="step-desc">Penggabungan nilai preferensi dari semua kriteria dengan bobot</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Flow Analysis</div>
+        <div class="step-desc">Perhitungan leaving flow, entering flow, dan net flow tiap alternatif</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-title">Rekomendasi</div>
+        <div class="step-desc">Perankingan final berdasarkan net flow tertinggi sebagai rekomendasi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRITERIA -->
+<section class="criteria" id="kriteria">
+  <div class="section-inner">
+    <div class="section-tag"><i class="ti ti-list-check" aria-hidden="true"></i> Kriteria Penilaian</div>
+    <h2 class="section-title">Faktor yang Menjadi<br>Dasar Rekomendasi</h2>
+    <div class="criteria-grid">
+      <div class="crit-card">
+        <div class="crit-badge">1</div>
+        <div>
+          <div class="crit-label">Nilai Akademik (Matematika)</div>
+          <div class="crit-type"><span class="benefit">Benefit</span></div>
+        </div>
+      </div>
+      <div class="crit-card">
+        <div class="crit-badge">2</div>
+        <div>
+          <div class="crit-label">Nilai Akademik (IPA / Sains)</div>
+          <div class="crit-type"><span class="benefit">Benefit</span></div>
+        </div>
+      </div>
+      <div class="crit-card">
+        <div class="crit-badge">3</div>
+        <div>
+          <div class="crit-label">Nilai Akademik (Bahasa)</div>
+          <div class="crit-type"><span class="benefit">Benefit</span></div>
+        </div>
+      </div>
+      <div class="crit-card">
+        <div class="crit-badge">4</div>
+        <div>
+          <div class="crit-label">Nilai Akademik (IPS / Sosial)</div>
+          <div class="crit-type"><span class="benefit">Benefit</span></div>
+        </div>
+      </div>
+      <div class="crit-card">
+        <div class="crit-badge">5</div>
+        <div>
+          <div class="crit-label">Minat Siswa (Kuesioner)</div>
+          <div class="crit-type"><span class="benefit">Benefit</span></div>
+        </div>
+      </div>
+      <div class="crit-card">
+        <div class="crit-badge">6</div>
+        <div>
+          <div class="crit-label">Kepribadian Siswa (Kuesioner)</div>
+          <div class="crit-type"><span class="benefit">Benefit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research" id="penelitian">
+  <div class="research-inner">
+    <div class="research-grid">
+      <div class="research-text">
+        <div class="section-tag"><i class="ti ti-microscope" aria-hidden="true"></i> Hasil Penelitian</div>
+        <h2 class="section-title">Sistem yang Terbukti<br>Akurat & Efektif</h2>
+        <p>Pengujian dilakukan terhadap 27 siswa MTs Wali Songo Asy-Syirbaany. Sistem menghasilkan perankingan alternatif jurusan untuk masing-masing siswa secara otomatis.</p>
+        <p>Perbandingan antara hasil perhitungan sistem dengan perhitungan manual pada salah satu data siswa menunjukkan hasil yang identik — membuktikan sistem berjalan dengan baik dan akurat.</p>
+        <div class="keyword-list">
+          <span class="keyword">Learning Management System</span>
+          <span class="keyword">Sistem Pendukung Keputusan</span>
+          <span class="keyword">PROMETHEE</span>
+          <span class="keyword">Rekomendasi Jurusan</span>
+          <span class="keyword">Multikriteria</span>
+        </div>
+      </div>
+      <div class="research-stats">
+        <div class="res-stat">
+          <div class="res-stat-num">27</div>
+          <div class="res-stat-lbl">Siswa diuji dalam penelitian</div>
+        </div>
+        <div class="res-stat">
+          <div class="res-stat-num">100%</div>
+          <div class="res-stat-lbl">Kesesuaian dengan perhitungan manual</div>
+        </div>
+        <div class="res-stat">
+          <div class="res-stat-num">5</div>
+          <div class="res-stat-lbl">Tahap perhitungan PROMETHEE</div>
+        </div>
+        <div class="res-stat">
+          <div class="res-stat-num">3+</div>
+          <div class="res-stat-lbl">Alternatif jurusan direkomendasikan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="roles" id="pengguna">
+  <div class="section-inner">
+    <div class="section-tag"><i class="ti ti-users" aria-hidden="true"></i> Pengguna Sistem</div>
+    <h2 class="section-title">Tiga Peran dalam<br>Satu Ekosistem</h2>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-header admin">
+          <div class="role-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+          <div>
+            <div class="role-name">Operator / Admin</div>
+            <div class="role-sub">Pengelola sistem & data</div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Mengelola data siswa dan akun pengguna</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Mengelola data minat dan kepribadian dari kuesioner</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Mengatur bobot kriteria penilaian</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Memantau hasil rekomendasi seluruh siswa</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Mengakses laporan dan rekap data</div>
+        </div>
+      </div>
+      <div class="role-card">
+        <div class="role-header teacher">
+          <div class="role-icon"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+          <div>
+            <div class="role-name">Guru</div>
+            <div class="role-sub">Penginput nilai akademik</div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Menginput nilai akademik siswa per mata pelajaran</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Memperbarui nilai yang telah diinput</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Melihat rekapitulasi nilai kelas</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Akses ke fitur LMS pembelajaran</div>
+        </div>
+      </div>
+      <div class="role-card">
+        <div class="role-header student">
+          <div class="role-icon"><i class="ti ti-user-graduate" aria-hidden="true"></i></div>
+          <div>
+            <div class="role-name">Siswa</div>
+            <div class="role-sub">Penerima rekomendasi</div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Mengisi kuesioner minat dan kepribadian</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Melihat hasil rekomendasi jurusan secara personal</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Melihat detail perankingan dan skor net flow</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Mengakses konten pembelajaran di LMS</div>
+          <div class="role-feature"><i class="ti ti-check" aria-hidden="true"></i> Memahami profil akademik diri sendiri</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="login">
+  <div class="cta-box">
+    <div class="section-tag" style="margin:0 auto 1rem;display:inline-flex"><i class="ti ti-door-enter" aria-hidden="true"></i> Mulai Sekarang</div>
+    <h2>Siap Menemukan<br>Jurusanmu?</h2>
+    <p>Masuk ke sistem dan dapatkan rekomendasi jurusan yang objektif, akurat, dan sesuai dengan profil akademik serta kepribadianmu.</p>
+    <div class="cta-buttons">
+      <a href="/login" class="btn-primary" style="background:var(--teal)"><i class="ti ti-login" aria-hidden="true"></i> Masuk ke Sistem</a>
+      <a href="/forgot-password" class="btn-secondary" style="border-color:#dde0d8;color:#718096"><i class="ti ti-key" aria-hidden="true"></i> Lupa Password?</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>EduPath SPK</strong> — Sistem Pendukung Keputusan Pemilihan Jurusan</p>
+  <p style="margin-top:6px">MTs Wali Songo Asy-Syirbaany · Ciputat, Tangerang Selatan · Berbasis Metode PROMETHEE</p>
+</footer>
+
+</body>
+</html>

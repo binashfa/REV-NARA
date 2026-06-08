@@ -476,6 +476,8 @@ class OperatorController extends Controller
 
             foreach ($jawabanSiswa as $pertanyaan_id => $nilai) {
 
+
+
                 $pertanyaan = Pertanyaan::find($pertanyaan_id);
 
                 JawabanMinat::updateOrCreate(
@@ -498,6 +500,13 @@ class OperatorController extends Controller
 
                 $skor[$pertanyaan->kategori] += $nilai;
             }
+
+            $skor['IPA'] /= 2;
+            $skor['IPS'] /= 2;
+            $skor['TKJ'] /= 2;
+            $skor['DKV'] /= 2;
+            $skor['Akuntansi'] /= 2;
+            $skor['Pondok Pesantren'] /= 2;
 
             $hasil = array_search(
                 max($skor),
@@ -540,76 +549,83 @@ class OperatorController extends Controller
         $filename = "template_minat_bakat.csv";
 
         $headers = [
-
             "Content-type" => "text/csv",
-
             "Content-Disposition" => "attachment; filename=$filename",
-
             "Pragma" => "no-cache",
-
             "Cache-Control" => "must-revalidate",
-
             "Expires" => "0"
-
         ];
 
         $siswas = Siswa::all();
+        $pertanyaans = Pertanyaan::orderBy('id')->get();
 
-        $callback = function () use ($siswas) {
+        $callback = function () use ($siswas, $pertanyaans) {
 
             $file = fopen('php://output', 'w');
 
-            // HEADER
-            fputcsv($file, [
-
+            // HEADER CSV
+            $header = [
                 'nama',
+                'nisn'
+            ];
 
-                'nisn',
+            foreach ($pertanyaans as $index => $pertanyaan) {
+                $header[] = 'p' . ($index + 1);
+            }
 
-                'p1',
-
-                'p2',
-
-                'p3',
-
-                'p4',
-
-                'p5',
-
-                'p6',
-
-                'p7',
-
-                'p8',
-
-                'p9',
-
-                'p10'
-
-            ]);
+            fputcsv($file, $header);
 
             // DATA SISWA
             foreach ($siswas as $siswa) {
 
-                fputcsv($file, [
-
+                $row = [
                     $siswa->nama,
+                    "'" . $siswa->nisn // agar NISN tidak jadi 1.23E+08
+                ];
 
-                    $siswa->nisn,
+                foreach ($pertanyaans as $pertanyaan) {
+                    $row[] = '';
+                }
 
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    ''
+                fputcsv($file, $row);
+            }
 
+            // BARIS KOSONG
+            fputcsv($file, []);
+            fputcsv($file, []);
+
+            // PERTANYAAN
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Pertanyaan :']);
+
+            foreach ($pertanyaans as $index => $pertanyaan) {
+
+                fputcsv($file, [
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    'P' . ($index + 1) . ' = ' . $pertanyaan->pertanyaan
                 ]);
             }
+
+            // INDIKATOR
+            fputcsv($file, []);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Indikator :']);
+
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '1 = Sangat Tidak Setuju']);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '2 = Tidak Setuju']);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '3 = Setuju']);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '4 = Sangat Setuju']);
 
             fclose($file);
         };
@@ -669,7 +685,11 @@ class OperatorController extends Controller
 
                 9 => $row[10],
 
-                10 => $row[11]
+                10 => $row[11],
+
+                11 => $row[12],
+
+                12 => $row[13]
 
             ];
 
@@ -807,6 +827,13 @@ class OperatorController extends Controller
                 $skor[$pertanyaan->kategori] += $nilai;
             }
 
+            $skor['IPA'] /= 2;
+            $skor['IPS'] /= 2;
+            $skor['TKJ'] /= 2;
+            $skor['DKV'] /= 2;
+            $skor['Akuntansi'] /= 2;
+            $skor['Pondok Pesantren'] /= 2;
+
             $hasil = array_search(
                 max($skor),
                 $skor
@@ -840,17 +867,94 @@ class OperatorController extends Controller
     public function templateKepribadian()
     {
         $filename = "template_kepribadian.csv";
-        $headers = ["Content-type" => "text/csv", "Content-Disposition" => "attachment; filename=$filename", "Pragma" => "no-cache", "Cache-Control" => "must-revalidate", "Expires" => "0"];
+
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate",
+            "Expires" => "0"
+        ];
+
         $siswas = Siswa::all();
-        $callback = function () use ($siswas) {
+        $pertanyaans = PertanyaanKepribadian::orderBy('id')->get();
+
+        $callback = function () use ($siswas, $pertanyaans) {
+
             $file = fopen('php://output', 'w');
-            fputcsv($file, ['nama', 'nisn', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10']);
-            foreach ($siswas as $siswa) {
-                fputcsv($file, [$siswa->nama, $siswa->nisn, '', '', '', '', '', '', '', '', '', '']);
+
+            // Header
+            $header = [
+                'nama',
+                'nisn'
+            ];
+
+            foreach ($pertanyaans as $index => $pertanyaan) {
+                $header[] = 'p' . ($index + 1);
             }
+
+            fputcsv($file, $header);
+
+            // Data siswa
+            foreach ($siswas as $siswa) {
+
+                $row = [
+                    $siswa->nama,
+                    "'" . $siswa->nisn // supaya NISN tidak berubah jadi notasi ilmiah
+                ];
+
+                foreach ($pertanyaans as $pertanyaan) {
+                    $row[] = '';
+                }
+
+                fputcsv($file, $row);
+            }
+
+            // Baris kosong
+            fputcsv($file, []);
+            fputcsv($file, []);
+
+            // Daftar pertanyaan
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Pertanyaan :']);
+
+            foreach ($pertanyaans as $index => $pertanyaan) {
+
+                fputcsv($file, [
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    'P' . ($index + 1) . ' = ' . $pertanyaan->pertanyaan
+                ]);
+            }
+
+            // Indikator
+            fputcsv($file, []);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Indikator :']);
+
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '1 = Sangat Tidak Setuju']);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '2 = Tidak Setuju']);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '3 = Setuju']);
+            fputcsv($file, ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '4 = Sangat Setuju']);
+
             fclose($file);
         };
-        return response()->stream($callback, 200, $headers);
+
+        return response()->stream(
+            $callback,
+            200,
+            $headers
+        );
     }
 
     public function importKepribadian(Request $request)
@@ -864,7 +968,7 @@ class OperatorController extends Controller
             if (!$siswa) {
                 continue;
             }
-            $jawaban = [1 => $row[2], 2 => $row[3], 3 => $row[4], 4 => $row[5], 5 => $row[6], 6 => $row[7], 7 => $row[8], 8 => $row[9], 9 => $row[10], 10 => $row[11]];
+            $jawaban = [1 => $row[2], 2 => $row[3], 3 => $row[4], 4 => $row[5], 5 => $row[6], 6 => $row[7], 7 => $row[8], 8 => $row[9], 9 => $row[10], 10 => $row[11], 11 => $row[12], 12 => $row[13]];
             $skor = ['IPA' => 0, 'IPS' => 0, 'TKJ' => 0, 'DKV' => 0, 'Akuntansi' => 0, 'Pondok Pesantren' => 0];
             foreach ($jawaban as $pertanyaan_id => $nilai) {
 
@@ -892,13 +996,21 @@ class OperatorController extends Controller
 
                 $skor[$pertanyaan->kategori] += $nilai;
             }
+
+            $skor['IPA'] /= 2;
+            $skor['IPS'] /= 2;
+            $skor['TKJ'] /= 2;
+            $skor['DKV'] /= 2;
+            $skor['Akuntansi'] /= 2;
+            $skor['Pondok Pesantren'] /= 2;
+
             $hasil = array_search(max($skor), $skor);
             HasilKepribadian::updateOrCreate(['siswa_id' => $siswa->id], ['ipa' => $skor['IPA'], 'ips' => $skor['IPS'], 'tkj' => $skor['TKJ'], 'dkv' => $skor['DKV'], 'akuntansi' => $skor['Akuntansi'], 'pondok_pesantren' => $skor['Pondok Pesantren'], 'hasil' => $hasil]);
         }
         fclose($file);
         return back()->with('success', 'Import kepribadian berhasil');
     }
-    
+
 
 
     public function setting()

@@ -49,39 +49,33 @@
 
                 </div>
 
-                <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl shrink-0
-                    shadow-inner items-center justify-center border 
-                    transform rotate-6 hover:rotate-0 transition duration-300">
+                <!-- ACTION BUTTONS -->
+                <div class="flex flex-col sm:flex-row items-center gap-3 md:gap-4 w-full md:w-auto z-10 mt-2 md:mt-0">
 
-                    <i class="fa-solid fa-star text-[#105666] text-3xl"></i>
+                    <button
+                        onclick="openImportModal()"
+                        class="flex w-full sm:w-auto justify-center items-center gap-2 bg-[#839958] hover:bg-[#6f8248]
+        text-white px-5 py-3 rounded-xl md:rounded-2xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-[1px] active:scale-[0.98] text-sm md:text-base">
+
+                        <i class="fa-solid fa-upload"></i>
+                        Import CSV
+
+                    </button>
+
+                    <div class="hidden md:flex w-20 h-20 bg-white/40 backdrop-blur-md rounded-3xl shrink-0
+        shadow-inner items-center justify-center border
+        transform rotate-6 hover:rotate-0 transition duration-300">
+
+                        <i class="fa-solid fa-star text-[#105666] text-3xl"></i>
+
+                    </div>
+
                 </div>
 
             </div>
         </div>
 
-        <!-- ACTION BUTTONS -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-6 items-start sm:items-center justify-between w-full">
 
-            <a href="/operator/template-minat-bakat"
-                class="flex w-full sm:w-auto justify-center items-center gap-2 bg-[#839958] hover:bg-[#6f8248] text-white px-5 py-3 rounded-xl md:rounded-2xl transition shadow-md hover:shadow-lg hover:-translate-y-[1px] text-sm md:text-base">
-                <i class="fa-solid fa-download"></i>
-                Download Template
-            </a>
-
-            <form method="POST" action="/operator/import-minat-bakat" enctype="multipart/form-data" class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center">
-                @csrf
-
-                <input type="file" name="file" required accept=".csv"
-                    class="w-full sm:w-60 border border-gray-200 rounded-xl md:rounded-2xl px-3 py-2 bg-white text-xs md:text-sm">
-
-                <button type="submit"
-                    class="flex w-full sm:w-auto justify-center items-center gap-2 bg-[#105666] hover:bg-[#0c4a56] text-white px-5 py-3 rounded-xl md:rounded-2xl transition shadow-md hover:shadow-lg hover:-translate-y-[1px] text-sm md:text-base">
-                    <i class="fa-solid fa-upload"></i>
-                    Import CSV
-                </button>
-            </form>
-
-        </div>
 
         <!-- FORM TABEL -->
         <form method="POST" action="/operator/simpan-minat-bakat">
@@ -106,7 +100,19 @@
 
                                 @foreach($pertanyaans as $pertanyaan)
                                 <th class="py-4 px-2 text-center font-bold w-16">
-                                    {{ $loop->iteration }}
+
+                                    <button
+                                        type="button"
+                                        onclick="openModal(
+                                            '{{ $pertanyaan->id }}',
+                                            `{{ addslashes($pertanyaan->pertanyaan) }}`
+                                        )"
+                                        class="w-10 h-10 rounded-full bg-[#105666] text-white hover:bg-[#0c4a56] transition">
+
+                                        {{ $loop->iteration }}
+
+                                    </button>
+
                                 </th>
                                 @endforeach
 
@@ -187,12 +193,221 @@
 
     </main>
 
+    <!-- MODAL EDIT PERTANYAAN -->
+    <div
+        id="modalPertanyaan"
+        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-[999] p-4">
+
+        <div class="bg-white rounded-3xl w-full max-w-xl p-6 shadow-xl">
+
+            <div class="flex justify-between items-center mb-5">
+
+                <h2 class="text-xl font-bold text-[#105666]">
+                    Edit Pertanyaan
+                </h2>
+
+                <button
+                    onclick="closeModal()"
+                    class="text-gray-400 hover:text-red-500">
+
+                    <i class="fa-solid fa-xmark text-xl"></i>
+
+                </button>
+
+            </div>
+
+            <form method="POST" action="/operator/update-pertanyaan-minat-bakat">
+                @csrf
+
+                <input
+                    type="hidden"
+                    name="id"
+                    id="modal_id">
+
+                <label class="block text-sm font-semibold mb-2">
+                    Isi Pertanyaan
+                </label>
+
+                <textarea
+                    id="modal_pertanyaan"
+                    name="pertanyaan"
+                    rows="5"
+                    required
+                    class="w-full border rounded-2xl p-3 focus:ring-2 focus:ring-[#839958] outline-none"></textarea>
+
+                <div class="flex justify-end gap-3 mt-5">
+
+                    <button
+                        type="button"
+                        onclick="closeModal()"
+                        class="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300">
+
+                        Batal
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="px-5 py-2 rounded-xl bg-[#105666] text-white hover:bg-[#0c4a56]">
+
+                        Simpan
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div
+        id="modalImport"
+        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50 p-4 backdrop-blur-sm">
+
+        <div class="bg-white w-full max-w-md rounded-[24px] md:rounded-[32px] shadow-2xl overflow-hidden">
+
+            <div class="relative px-6 py-5 border-b border-gray-100">
+
+                <div class="absolute top-0 left-0 w-full h-[4px]
+                bg-gradient-to-r from-[#105666] via-[#839958] to-[#D3968C]"></div>
+
+                <div class="flex justify-between items-center">
+
+                    <h1 class="text-xl font-black text-[#105666]">
+                        Import Minat Bakat
+                    </h1>
+
+                    <button
+                        type="button"
+                        onclick="closeImportModal()"
+                        class="text-gray-400 hover:text-red-500">
+
+                        <i class="fa-solid fa-xmark text-xl"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <form
+                method="POST"
+                action="/operator/import-minat-bakat"
+                enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="p-6 space-y-4">
+
+                    <a
+                        href="/operator/template-minat-bakat"
+                        class="flex w-full justify-center items-center gap-2
+                    bg-[#839958] hover:bg-[#6f8248]
+                    text-white px-5 py-3 rounded-xl transition">
+
+                        <i class="fa-solid fa-download"></i>
+                        Download Template
+
+                    </a>
+
+                    <div>
+
+                        <label class="block mb-2 text-sm font-semibold text-[#105666]">
+                            Upload File CSV
+                        </label>
+
+                        <input
+                            type="file"
+                            name="file"
+                            required
+                            accept=".csv"
+                            class="w-full border border-gray-200 rounded-xl p-3">
+
+                        <p class="text-xs text-gray-400 mt-2">
+                            Format file harus CSV sesuai template
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="flex justify-end gap-3 p-6 border-t">
+
+                    <button
+                        type="button"
+                        onclick="closeImportModal()"
+                        class="px-5 py-2 rounded-xl bg-gray-200">
+
+                        Batal
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="px-5 py-2 rounded-xl bg-[#105666] text-white">
+
+                        Import
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
     <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px;}
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.2); }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
     </style>
+
+    <script>
+        function openImportModal() {
+            document.getElementById('modalImport').classList.remove('hidden');
+            document.getElementById('modalImport').classList.add('flex');
+        }
+
+        function closeImportModal() {
+            document.getElementById('modalImport').classList.remove('flex');
+            document.getElementById('modalImport').classList.add('hidden');
+        }
+
+        function openModal(id, pertanyaan) {
+            document.getElementById('modal_id').value = id;
+            document.getElementById('modal_pertanyaan').value = pertanyaan;
+
+            let modal = document.getElementById('modalPertanyaan');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            let modal = document.getElementById('modalPertanyaan');
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
 
 </body>
 

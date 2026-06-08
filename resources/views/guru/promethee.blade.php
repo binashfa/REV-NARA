@@ -127,7 +127,6 @@
             <div class="p-8 space-y-8">
 
                 <!-- ALTERNATIF -->
-                <!-- ALTERNATIF & KRITERIA -->
                 <div class="grid md:grid-cols-2 gap-6">
 
                     <!-- ALTERNATIF -->
@@ -186,7 +185,6 @@
 
                 </div>
 
-                <!-- BOBOT AKADEMIK -->
                 <!-- BOBOT KRITERIA -->
                 <div>
 
@@ -306,7 +304,8 @@
                 <h3 class="font-bold text-[#105666] mb-4">Rumus</h3>
 
                 <div class="text-center text-2xl font-bold mb-8">
-                    (UTS + UAS + UAM)<hr class="w-48 mx-auto border-black">3
+                    (UTS + UAS + UAM)
+                    <hr class="w-48 mx-auto border-black">3
                 </div>
 
                 <h3 class="font-bold text-[#105666] mb-4">Hasil Per Mapel</h3>
@@ -507,7 +506,7 @@
 
                             <tr>
                                 <td class="border px-4 py-3">{{ $jurusan }}</td>
-                                <td class="border px-4 py-3 text-center">{{ number_format($nilai) }}</td>
+                                <td class="border px-4 py-3 text-center">{{ number_format($nilai, 2) }}</td>
                                 <td class="border px-4 py-3 text-center font-bold text-[#D3968C]">{{ $bobot }}</td>
                             </tr>
 
@@ -591,9 +590,9 @@
                             </th>
 
                             @foreach($alternatif as $jurusan => $v)
-                                <th class="border px-4 py-3">
-                                    {{ $jurusan }}
-                                </th>
+                            <th class="border px-4 py-3">
+                                {{ $jurusan }}
+                            </th>
                             @endforeach
 
                         </tr>
@@ -610,10 +609,14 @@
                                 {{ $a }}
                             </td>
 
-                            @foreach($row as $nilai)
-                                <td class="border px-4 py-3 text-center">
-                                    {{ number_format($nilai,2) }}
-                                </td>
+                            @foreach($row as $b => $nilai)
+
+                            <td class="border px-4 py-3 text-center">
+
+                                {{ $a == $b ? '-' : number_format($nilai, 2) }}
+
+                            </td>
+
                             @endforeach
 
                         </tr>

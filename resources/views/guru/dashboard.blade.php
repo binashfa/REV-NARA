@@ -188,7 +188,7 @@
                                          bg-[#eef6f6] text-[#105666]
                                          shadow-sm transition-all duration-300
                                          group-hover:scale-105 group-hover:shadow-md">
-                                {{ $nilai->nilai }}
+                                {{ round((($nilai->uts ?? 0) + ($nilai->uas ?? 0) + ($nilai->uam ?? 0)) / 3, 2) }}
                             </span>
                         </td>
 

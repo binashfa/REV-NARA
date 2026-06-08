@@ -12,9 +12,17 @@ use App\Http\Controllers\PrometheeController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/', function () { return view('landing-page'); });
+
 Route::get('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/forgot-password/check', [AuthController::class, 'checkForgotPassword']);
+
+Route::get('/reset-password/{id}', [AuthController::class, 'resetPassword']);
+Route::post('/reset-password/{id}', [AuthController::class, 'updatePassword']);
 
 /*
 |--------------------------------------------------------------------------

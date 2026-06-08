@@ -98,7 +98,6 @@
                             <th class="py-4 pl-2 pr-4">No</th>
                             <th class="py-4 px-4">Username</th>
                             <th class="py-4 px-4">Nama</th>
-                            <th class="py-4 px-4">Mapel</th>
                             <th class="py-4 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -142,26 +141,6 @@
                                         value="{{ $guru->nama }}"
                                         id="guruNamaInput-{{ $guru->id }}"
                                         class="hidden w-full min-w-[150px] border border-gray-200 rounded-xl px-3 py-1.5 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#839958]">
-                                </td>
-
-                                <td class="py-3 md:py-4 px-4">
-                                    <span id="guruMapelText-{{ $guru->id }}"
-                                        class="inline-flex items-center gap-1 bg-[#eef6f6] text-[#105666] px-3 py-1 rounded-full text-[10px] md:text-xs font-semibold">
-                                        {{ $guru->mapel->nama_mapel }}
-                                    </span>
-
-                                    <select name="mapel_id"
-                                        id="guruMapelInput-{{ $guru->id }}"
-                                        class="hidden w-full min-w-[150px] border border-gray-200 rounded-xl px-3 py-1.5 md:py-2 focus:ring-2 focus:ring-[#839958]">
-
-                                        @foreach($mapels as $mapel)
-                                        <option value="{{ $mapel->id }}"
-                                            {{ $guru->mapel_id == $mapel->id ? 'selected' : '' }}>
-                                            {{ $mapel->nama_mapel }}
-                                        </option>
-                                        @endforeach
-
-                                    </select>
                                 </td>
 
                             </form>

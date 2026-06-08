@@ -142,9 +142,6 @@ $path = request()->path();
                 <h3 class="text-sm font-semibold truncate">
                     {{ $sidebarOperator->nama }}
                 </h3>
-                <p class="text-xs text-white/70 truncate">
-                    {{ auth()->user()->username }}
-                </p>
             </div>
 
         </div>
