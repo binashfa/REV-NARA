@@ -548,6 +548,5 @@ footer strong{color:rgba(247,244,213,0.7)}
   <p style="margin-top:6px">MTs Wali Songo Asy-Syirbaany · Ciputat, Tangerang Selatan · Berbasis Metode PROMETHEE</p>
 </footer>
 
-@include('idle-video')
 </body>
 </html>
