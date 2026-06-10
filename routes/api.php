@@ -20,10 +20,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/nilai', [ApiGuruController::class, 'simpanNilai']);
 
+        Route::post('/nilai/import', [ApiGuruController::class, 'importNilai']);
+
+        Route::get('/nilai/template', [ApiGuruController::class, 'templateNilai']);
+
         Route::get('/setting', [ApiGuruController::class, 'setting']);
 
         Route::put('/setting', [ApiGuruController::class, 'updateSetting']);
-
     });
-
 });

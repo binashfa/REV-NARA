@@ -35,22 +35,35 @@ class ApiGuruController extends Controller
         ]);
     }
 
-    public function kelolaNilai()
+    public function kelolaNilai(Request $request)
     {
-        $siswas = Siswa::with('nilais')->get();
+        $mapelId = $request->mapel_id;
+
         $mapels = Mapel::all();
+
+        $siswas = Siswa::with([
+            'nilais' => function ($query) use ($mapelId) {
+                $query->where('mapel_id', $mapelId);
+            }
+        ])->get();
 
         return response()->json([
             'success' => true,
             'data' => [
+                'mapels' => $mapels,
                 'siswas' => $siswas,
-                'mapels' => $mapels
+                'selected_mapel' => $mapelId
             ]
         ]);
     }
 
     public function simpanNilai(Request $request)
     {
+        $request->validate([
+            'mapel_id' => 'required',
+            'nilai' => 'required|array'
+        ]);
+
         foreach ($request->nilai as $siswaId => $data) {
 
             Nilai::updateOrCreate(
@@ -60,9 +73,9 @@ class ApiGuruController extends Controller
                 ],
                 [
                     'guru_id' => Auth::user()->guru->id,
-                    'uts' => $data['uts'],
-                    'uas' => $data['uas'],
-                    'uam' => $data['uam']
+                    'uts' => $data['uts'] ?? null,
+                    'uas' => $data['uas'] ?? null,
+                    'uam' => $data['uam'] ?? null
                 ]
             );
         }
@@ -70,6 +83,86 @@ class ApiGuruController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Nilai berhasil disimpan'
+        ]);
+    }
+
+    public function templateNilai()
+    {
+        $siswas = Siswa::all();
+
+        $filename = storage_path('app/template_nilai.csv');
+
+        $file = fopen($filename, 'w');
+
+        fputcsv($file, [
+            'NISN',
+            'Nama',
+            'UTS',
+            'UAS',
+            'UAM'
+        ]);
+
+        foreach ($siswas as $siswa) {
+            fputcsv($file, [
+                $siswa->nisn,
+                $siswa->nama,
+                '',
+                '',
+                ''
+            ]);
+        }
+
+        fclose($file);
+
+        return response()->download($filename);
+    }
+
+    public function importNilai(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt',
+            'mapel_id' => 'required'
+        ]);
+
+        $file = fopen(
+            $request->file('file')->getRealPath(),
+            'r'
+        );
+
+        fgetcsv($file);
+
+        while (($row = fgetcsv($file)) !== false) {
+
+            $nisn = trim(str_replace("'", "", $row[0]));
+
+            $siswa = Siswa::where(
+                'nisn',
+                $nisn
+            )->first();
+
+            if (!$siswa) {
+                continue;
+            }
+
+            Nilai::updateOrCreate(
+                [
+                    'siswa_id' => $siswa->id,
+                    'mapel_id' => $request->mapel_id
+                ],
+                [
+                    'guru_id' => Auth::user()->guru->id,
+                    'uts' => $row[2] ?: null,
+                    'uas' => $row[3] ?: null,
+                    'uam' => $row[4] ?: null
+                ]
+            );
+        }
+
+        fclose($file);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Import nilai berhasil'
         ]);
     }
 
