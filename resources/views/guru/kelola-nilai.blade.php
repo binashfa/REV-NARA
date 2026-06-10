@@ -64,7 +64,6 @@
 
         <section class="bg-white rounded-[24px] md:rounded-[32px] shadow-sm border p-4 sm:p-6 md:p-8">
 
-            @if($mapelId)
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 md:mb-8">
 
                 <form method="GET">
@@ -72,12 +71,14 @@
                         name="mapel_id"
                         onchange="this.form.submit()"
                         class="border border-gray-200 rounded-xl px-4 py-3 w-full md:w-64 outline-none text-sm md:text-base
-                   focus:ring-2 focus:ring-[#105666]/30 transition-all">
+                       focus:ring-2 focus:ring-[#105666]/30 transition-all">
 
                         <option value="">Pilih Mapel</option>
 
                         @foreach($mapels as $mapel)
-                        <option value="{{ $mapel->id }}" {{ $mapelId == $mapel->id ? 'selected' : '' }}>
+                        <option
+                            value="{{ $mapel->id }}"
+                            {{ $mapelId == $mapel->id ? 'selected' : '' }}>
                             {{ $mapel->nama_mapel }}
                         </option>
                         @endforeach
@@ -91,7 +92,7 @@
                     type="button"
                     onclick="openImportModal()"
                     class="px-5 py-3 rounded-xl bg-[#105666] text-white font-semibold
-               hover:bg-[#0d4b59] transition shadow-sm">
+                   hover:bg-[#0d4b59] transition shadow-sm">
 
                     <i class="fa-solid fa-file-import mr-2"></i>
                     Import Nilai
@@ -101,6 +102,8 @@
                 @endif
 
             </div>
+
+            @if($mapelId)
 
             <form method="POST" action="/guru/simpan-nilai">
                 @csrf
@@ -130,8 +133,7 @@
                             $nilai = $siswa->nilais->where('mapel_id', $mapelId)->first();
                             @endphp
 
-                            <tr class="border-b border-gray-50 transition-all duration-300
-                                hover:bg-[#F7F4D5]/40 group">
+                            <tr class="border-b border-gray-50 transition-all duration-300 hover:bg-[#F7F4D5]/40 group">
 
                                 <td class="py-3 md:py-4 px-3 text-center font-medium text-[#105666]">
                                     {{ $loop->iteration }}
@@ -146,33 +148,30 @@
                                 </td>
 
                                 <td class="py-3 md:py-4 px-2 text-center">
-                                    <input type="number" min="0" max="100"
+                                    <input type="number"
+                                        min="0"
+                                        max="100"
                                         name="nilai[{{ $siswa->id }}][uts]"
                                         value="{{ $nilai->uts ?? '' }}"
-                                        class="w-16 md:w-20 min-w-[70px] text-center border border-gray-200 rounded-lg py-1.5 md:py-2 text-xs md:text-sm
-                                        focus:ring-2 focus:ring-[#839958]/40
-                                        focus:border-[#839958] outline-none
-                                        transition">
+                                        class="w-16 md:w-20 min-w-[70px] text-center border border-gray-200 rounded-lg py-1.5 md:py-2 text-xs md:text-sm focus:ring-2 focus:ring-[#839958]/40 focus:border-[#839958] outline-none transition">
                                 </td>
 
                                 <td class="py-3 md:py-4 px-2 text-center">
-                                    <input type="number" min="0" max="100"
+                                    <input type="number"
+                                        min="0"
+                                        max="100"
                                         name="nilai[{{ $siswa->id }}][uas]"
                                         value="{{ $nilai->uas ?? '' }}"
-                                        class="w-16 md:w-20 min-w-[70px] text-center border border-gray-200 rounded-lg py-1.5 md:py-2 text-xs md:text-sm
-                                        focus:ring-2 focus:ring-[#D3968C]/40
-                                        focus:border-[#D3968C] outline-none
-                                        transition">
+                                        class="w-16 md:w-20 min-w-[70px] text-center border border-gray-200 rounded-lg py-1.5 md:py-2 text-xs md:text-sm focus:ring-2 focus:ring-[#D3968C]/40 focus:border-[#D3968C] outline-none transition">
                                 </td>
 
                                 <td class="py-3 md:py-4 px-2 text-center">
-                                    <input type="number" min="0" max="100"
+                                    <input type="number"
+                                        min="0"
+                                        max="100"
                                         name="nilai[{{ $siswa->id }}][uam]"
                                         value="{{ $nilai->uam ?? '' }}"
-                                        class="w-16 md:w-20 min-w-[70px] text-center border border-gray-200 rounded-lg py-1.5 md:py-2 text-xs md:text-sm
-                                        focus:ring-2 focus:ring-[#105666]/30
-                                        focus:border-[#105666] outline-none
-                                        transition">
+                                        class="w-16 md:w-20 min-w-[70px] text-center border border-gray-200 rounded-lg py-1.5 md:py-2 text-xs md:text-sm focus:ring-2 focus:ring-[#105666]/30 focus:border-[#105666] outline-none transition">
                                 </td>
 
                             </tr>
@@ -186,11 +185,17 @@
                 </div>
 
                 <div class="mt-8 flex justify-end">
-                    <button type="submit"
+
+                    <button
+                        type="submit"
                         class="w-full md:w-auto px-8 py-3 rounded-xl bg-[#D3968C] text-white font-semibold text-sm md:text-base
-                           hover:bg-[#c07f75] transition shadow-sm hover:shadow-md hover:-translate-y-[1px]">
-                        <i class="fa-solid fa-save mr-1"></i> Simpan Nilai
+                       hover:bg-[#c07f75] transition shadow-sm hover:shadow-md hover:-translate-y-[1px]">
+
+                        <i class="fa-solid fa-save mr-1"></i>
+                        Simpan Nilai
+
                     </button>
+
                 </div>
 
             </form>
@@ -198,12 +203,15 @@
             @else
 
             <div class="text-center py-12 md:py-16">
+
                 <div class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#F7F4D5] flex items-center justify-center mx-auto mb-3 md:mb-4">
                     <i class="fa-solid fa-filter text-[#105666] text-lg md:text-xl"></i>
                 </div>
+
                 <p class="text-gray-500 text-xs md:text-sm font-medium">
                     Pilih mapel terlebih dahulu untuk mengelola nilai.
                 </p>
+
             </div>
 
             @endif
@@ -213,7 +221,6 @@
     </main>
 
     <!-- Modal Import -->
-    <!-- Modal Import Nilai -->
     <div
         id="modalImport"
         class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50 p-4 backdrop-blur-sm">

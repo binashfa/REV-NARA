@@ -11,16 +11,13 @@ use Illuminate\Support\Facades\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\User;
 use App\Http\Controllers\PrometheeController;
+use App\Models\HasilPromethee;
 
 class GuruController extends Controller
 {
     public function dashboard()
     {
         $guru = Auth::user()->guru;
-
-        if (!$guru) {
-            abort(403, 'Data guru tidak ditemukan');
-        }
 
         $jumlahSiswa = Siswa::count();
 
@@ -30,9 +27,18 @@ class GuruController extends Controller
             'siswa',
             'mapel'
         ])
-            ->latest('created_at')
+            ->latest()
             ->take(5)
             ->get();
+
+        foreach (Siswa::all() as $siswa) {
+
+            $hasil = PrometheeController::getHasilPromethee($siswa);
+
+            $jurusan = $hasil['rekomendasiJurusan'];
+
+            $hasilPromethee[$jurusan][] = $siswa;
+        }
 
         return view(
             'guru.dashboard',
@@ -40,7 +46,8 @@ class GuruController extends Controller
                 'guru',
                 'jumlahSiswa',
                 'jumlahNilai',
-                'nilaiTerbaru'
+                'nilaiTerbaru',
+                'hasilPromethee'
             )
         );
     }
@@ -188,7 +195,7 @@ class GuruController extends Controller
 
         while (($row = fgetcsv($file)) !== false) {
 
-            $nisn = $row[0];
+            $nisn = trim(str_replace("'", "", $row[0]));
 
             $uts = $row[2] === '' ? null : $row[2];
 
