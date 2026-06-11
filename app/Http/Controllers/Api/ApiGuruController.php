@@ -9,6 +9,8 @@ use App\Models\Nilai;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\PrometheeController;
 
 class ApiGuruController extends Controller
 {
@@ -166,12 +168,81 @@ class ApiGuruController extends Controller
         ]);
     }
 
+    public function raport(Request $request)
+    {
+        $siswas = Siswa::all();
+
+        $siswaId = $request->siswa_id;
+
+        $data = [
+            'siswas' => $siswas,
+            'siswa' => null,
+            'ranking' => [],
+            'leavingFlows' => [],
+            'enteringFlows' => [],
+            'netFlows' => [],
+            'rekomendasiJurusan' => null,
+        ];
+
+        if ($siswaId) {
+
+            $siswa = Siswa::with([
+                'nilais.mapel',
+                'hasilMinat',
+                'hasilKepribadian'
+            ])->findOrFail($siswaId);
+
+            $hasil = PrometheeController::getHasilPromethee($siswa);
+
+            $data['siswa'] = $siswa;
+            $data['ranking'] = $hasil['ranking'];
+            $data['leavingFlows'] = $hasil['leavingFlows'];
+            $data['enteringFlows'] = $hasil['enteringFlows'];
+            $data['netFlows'] = $hasil['netFlows'];
+            $data['rekomendasiJurusan'] = $hasil['rekomendasiJurusan'];
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data raport berhasil diambil',
+            'data' => $data
+        ]);
+    }
+
+    public function exportRaportPdf($id)
+    {
+        $siswa = Siswa::with([
+            'nilais.mapel',
+            'hasilMinat',
+            'hasilKepribadian'
+        ])->findOrFail($id);
+
+        $hasil = PrometheeController::getHasilPromethee($siswa);
+
+        $pdf = Pdf::loadView(
+            'guru.raport-pdf',
+            [
+                'siswa' => $siswa,
+                'ranking' => $hasil['ranking'],
+                'leavingFlows' => $hasil['leavingFlows'],
+                'enteringFlows' => $hasil['enteringFlows'],
+                'netFlows' => $hasil['netFlows'],
+                'rekomendasiJurusan' => $hasil['rekomendasiJurusan']
+            ]
+        );
+
+        return $pdf->download(
+            'raport-' . $siswa->nama . '.pdf'
+        );
+    }
+
     public function setting()
     {
         $guru = Auth::user()->guru;
 
         return response()->json([
             'success' => true,
+            'message' => 'Data setting berhasil diambil',
             'data' => $guru
         ]);
     }
@@ -186,23 +257,28 @@ class ApiGuruController extends Controller
 
         $user = User::find(Auth::id());
 
-        $user->username = $request->username;
+        $user->update([
+            'username' => $request->username,
+            'password' => $request->password
+                ? bcrypt($request->password)
+                : $user->password
+        ]);
 
-        if ($request->password) {
-            $user->password = bcrypt($request->password);
-        }
+        $guru = $user->guru;
 
-        $user->save();
-
-        if ($user->guru) {
-            $user->guru->update([
+        if ($guru) {
+            $guru->update([
                 'nama' => $request->nama
             ]);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Setting berhasil diperbarui'
+            'message' => 'Setting berhasil diperbarui',
+            'data' => [
+                'user' => $user->fresh(),
+                'guru' => $guru?->fresh()
+            ]
         ]);
     }
 }
