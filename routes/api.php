@@ -27,11 +27,24 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/setting', [ApiGuruController::class, 'setting']);
         Route::put('/setting', [ApiGuruController::class, 'updateSetting']);
+
+        Route::get('/raport', [ApiGuruController::class, 'raport']);
+        Route::get('/raport/export/{id}', [ApiGuruController::class, 'exportRaportPdf']);
     });
 
     Route::prefix('operator')->group(function () {
 
-        Route::get('/operator/dashboard', [ApiOperatorController::class, 'dashboard']);
+        Route::get('/dashboard', [ApiOperatorController::class, 'dashboard']);
+
+        // AKUN
+        Route::get('/kelola-akun', [ApiOperatorController::class, 'kelolaAkun']);
+        Route::post('/tambah-akun', [ApiOperatorController::class, 'tambahAkun']);
+
+        Route::put('/edit-guru/{id}', [ApiOperatorController::class, 'editGuru']);
+        Route::put('/edit-operator/{id}', [ApiOperatorController::class, 'editOperator']);
+
+        Route::delete('/hapus-guru/{id}', [ApiOperatorController::class, 'hapusGuru']);
+        Route::delete('/hapus-operator/{id}', [ApiOperatorController::class, 'hapusOperator']);
 
         // MAPEL
         Route::get('/mapel', [ApiOperatorController::class, 'kelolaMapel']);
@@ -60,3 +73,4 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/setting', [ApiOperatorController::class, 'updateSetting']);
     });
 });
+

@@ -29,10 +29,21 @@ class ApiAuthController extends Controller
             ->createToken('flutter')
             ->plainTextToken;
 
+        $role = null;
+
+        if ($user->guru) {
+            $role = 'guru';
+        }
+
+        if ($user->operator) {
+            $role = 'operator';
+        }
+
         return response()->json([
             'success' => true,
             'token' => $token,
-            'user' => $user
+            'user' => $user,
+            'role' => $role
         ]);
     }
 

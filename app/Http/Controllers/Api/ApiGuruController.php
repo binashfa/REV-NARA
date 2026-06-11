@@ -26,16 +26,43 @@ class ApiGuruController extends Controller
             'mapel'
         ])->latest()->take(5)->get();
 
+        $siswas = Siswa::with([
+            'nilais.mapel',
+            'hasilMinat',
+            'hasilKepribadian'
+        ])->get();
+
+        $rekomendasiJurusan = [];
+
+        foreach ($siswas as $siswa) {
+            try {
+                $hasil = PrometheeController::getHasilPromethee($siswa);
+
+                $jurusan = $hasil['rekomendasiJurusan'] ?? null;
+
+                if ($jurusan) {
+                    $rekomendasiJurusan[$jurusan][] = [
+                        'id' => $siswa->id,
+                        'nama' => $siswa->nama,
+                    ];
+                }
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
                 'jumlah_siswa' => $jumlahSiswa,
                 'jumlah_nilai' => $jumlahNilai,
                 'guru' => $guru,
-                'nilai_terbaru' => $nilaiTerbaru
+                'nilai_terbaru' => $nilaiTerbaru,
+                'rekomendasi_jurusan' => $rekomendasiJurusan,
             ]
         ]);
     }
+
 
     public function kelolaNilai(Request $request)
     {
@@ -239,12 +266,16 @@ class ApiGuruController extends Controller
 
     public function setting()
     {
-        $guru = Auth::user()->guru;
+        $user = Auth::user();
+        $guru = $user->guru;
 
         return response()->json([
             'success' => true,
             'message' => 'Data setting berhasil diambil',
-            'data' => $guru
+            'data' => [
+                'guru' => $guru,
+                'user' => $user,
+            ]
         ]);
     }
 

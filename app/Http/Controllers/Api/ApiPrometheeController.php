@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
-
 
 class ApiPrometheeController extends Controller
 {
     public function promethee(Request $request)
     {
-        $siswas = Siswa::all();
+        $siswas = Siswa::select('id', 'nama', 'nisn', 'jenis_kelamin')
+            ->orderBy('nama', 'asc')
+            ->get();
 
-        $siswaId = $request->siswa_id;
+        $siswaId = $request->query('siswa_id');
 
         $siswa = null;
 
