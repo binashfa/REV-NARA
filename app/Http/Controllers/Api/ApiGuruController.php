@@ -66,7 +66,8 @@ class ApiGuruController extends Controller
             'nilai' => 'required|array'
         ]);
 
-        foreach ($request->nilai as $siswaId => $data) {
+        foreach ($request->nilai as $data) {
+            $siswaId = $data['id'];
 
             Nilai::updateOrCreate(
                 [
