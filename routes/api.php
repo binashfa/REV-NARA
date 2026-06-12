@@ -14,37 +14,60 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/me', [ApiAuthController::class, 'me']);
 
+    /*
+    |--------------------------------------------------------------------------
+    | GURU ROUTES
+    |--------------------------------------------------------------------------
+    */
     Route::prefix('guru')->group(function () {
 
         Route::get('/dashboard', [ApiGuruController::class, 'dashboard']);
 
+        // NILAI
         Route::get('/nilai', [ApiGuruController::class, 'kelolaNilai']);
         Route::post('/nilai', [ApiGuruController::class, 'simpanNilai']);
         Route::post('/nilai/import', [ApiGuruController::class, 'importNilai']);
         Route::get('/nilai/template', [ApiGuruController::class, 'templateNilai']);
 
-        Route::get('/guru/promethee', [ApiPrometheeController::class, 'promethee']);
+        // PROMETHEE
+        Route::get('/promethee', [ApiPrometheeController::class, 'promethee']);
 
+        // SETTING
         Route::get('/setting', [ApiGuruController::class, 'setting']);
         Route::put('/setting', [ApiGuruController::class, 'updateSetting']);
 
+        // RAPORT
         Route::get('/raport', [ApiGuruController::class, 'raport']);
         Route::get('/raport/export/{id}', [ApiGuruController::class, 'exportRaportPdf']);
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | OPERATOR ROUTES
+    |--------------------------------------------------------------------------
+    */
     Route::prefix('operator')->group(function () {
 
         Route::get('/dashboard', [ApiOperatorController::class, 'dashboard']);
 
         // AKUN
         Route::get('/kelola-akun', [ApiOperatorController::class, 'kelolaAkun']);
-        Route::post('/tambah-akun', [ApiOperatorController::class, 'tambahAkun']);
+        Route::post('/akun', [ApiOperatorController::class, 'tambahAkun']);
 
-        Route::put('/edit-guru/{id}', [ApiOperatorController::class, 'editGuru']);
-        Route::put('/edit-operator/{id}', [ApiOperatorController::class, 'editOperator']);
+        Route::put('/edit-guru/{id}', [ApiOperatorController::class, 'updateGuru']);
+        Route::put('/edit-operator/{id}', [ApiOperatorController::class, 'updateOperator']);
 
         Route::delete('/hapus-guru/{id}', [ApiOperatorController::class, 'hapusGuru']);
         Route::delete('/hapus-operator/{id}', [ApiOperatorController::class, 'hapusOperator']);
+
+        // SISWA
+        Route::get('/siswa', [ApiOperatorController::class, 'kelolaSiswa']);
+        Route::post('/siswa', [ApiOperatorController::class, 'tambahSiswa']);
+        Route::put('/siswa/{id}', [ApiOperatorController::class, 'editSiswa']);
+        Route::delete('/siswa/{id}', [ApiOperatorController::class, 'hapusSiswa']);
+
+        Route::post('/siswa/import', [ApiOperatorController::class, 'importSiswa']);
+        Route::get('/siswa/template', [ApiOperatorController::class, 'templateSiswa']);
 
         // MAPEL
         Route::get('/mapel', [ApiOperatorController::class, 'kelolaMapel']);
@@ -73,4 +96,3 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/setting', [ApiOperatorController::class, 'updateSetting']);
     });
 });
-

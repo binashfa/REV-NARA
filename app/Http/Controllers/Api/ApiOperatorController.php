@@ -18,6 +18,9 @@ use App\Models\PertanyaanKepribadian;
 use App\Models\JawabanKepribadian;
 use App\Models\HasilKepribadian;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class ApiOperatorController extends Controller
@@ -73,127 +76,166 @@ class ApiOperatorController extends Controller
     }
 
     public function tambahAkun(Request $request)
-    {
-        $request->validate([
+{
+    $request->validate([
+        'username' => 'required|unique:users,username',
+        'password' => 'required',
+        'role' => 'required|in:guru,operator',
+        'nama' => 'required',
+        'mapel_id' => 'required_if:role,guru|nullable|exists:mapels,id',
+        'jenis_kelamin' => 'required_if:role,guru|nullable|in:Laki-laki,Perempuan',
+    ]);
 
-            'username' => 'required|unique:users',
-
-            'password' => 'required',
-
-            'role' => 'required',
-
-            'nama' => 'required'
-
-        ]);
-
-        // SIMPAN USER
+    DB::transaction(function () use ($request) {
         $user = User::create([
-
             'username' => $request->username,
-
-            'password' => bcrypt($request->password),
-
-            'role' => $request->role
-
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
 
-        // JIKA GURU
-        if ($request->role == 'guru') {
-
+        if ($request->role === 'guru') {
             Guru::create([
-
                 'user_id' => $user->id,
-
                 'mapel_id' => $request->mapel_id,
-
                 'nama' => $request->nama,
-
-                'jenis_kelamin' => $request->jenis_kelamin
-
+                'jenis_kelamin' => $request->jenis_kelamin,
             ]);
         }
 
-        // JIKA OPERATOR
-        if ($request->role == 'operator') {
-
+        if ($request->role === 'operator') {
             Operator::create([
-
                 'user_id' => $user->id,
-
                 'nama' => $request->nama,
-
-                'jabatan' => 'admin'
-
+                'jabatan' => 'admin',
             ]);
         }
+    });
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Akun berhasil ditambahkan'
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'message' => 'Akun berhasil ditambahkan'
+    ], 201);
+}
 
-    public function editOperator(Request $request, $id)
-    {
-        $operator = Operator::findOrFail($id);
+public function hapusGuru($id)
+{
+    DB::transaction(function () use ($id) {
+        $guru = Guru::with('user')->findOrFail($id);
 
-        $operator->update([
-
-            'nama' => $request->nama
-
-        ]);
-
-        $operator->user->update([
-
-            'username' => $request->username
-
-        ]);
-
-        return back();
-    }
-
-    public function editGuru(Request $request, $id)
-    {
-        $guru = Guru::findOrFail($id);
-
-        $guru->update([
-
-            'nama' => $request->nama,
-
-            'mapel_id' => $request->mapel_id
-
-        ]);
-
-        $guru->user->update([
-
-            'username' => $request->username
-
-        ]);
-
-        return back();
-    }
-
-    public function hapusGuru($id)
-    {
-        $guru = Guru::findOrFail($id);
-
-        $guru->user->delete();
+        $user = $guru->user;
 
         $guru->delete();
 
-        return back();
-    }
+        if ($user) {
+            $user->delete();
+        }
+    });
 
-    public function hapusOperator($id)
-    {
-        $operator = Operator::findOrFail($id);
+    return response()->json([
+        'success' => true,
+        'message' => 'Guru berhasil dihapus'
+    ]);
+}
 
-        $operator->user->delete();
+public function hapusOperator($id)
+{
+    DB::transaction(function () use ($id) {
+        $operator = Operator::with('user')->findOrFail($id);
+
+        $user = $operator->user;
 
         $operator->delete();
 
-        return back();
-    }
+        if ($user) {
+            $user->delete();
+        }
+    });
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Operator berhasil dihapus'
+    ]);
+}
+
+public function updateGuru(Request $request, $id)
+{
+    $guru = Guru::with('user')->findOrFail($id);
+
+    $request->validate([
+        'username' => [
+            'required',
+            Rule::unique('users', 'username')->ignore($guru->user_id),
+        ],
+        'nama' => 'required',
+        'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+        'mapel_id' => 'required|exists:mapels,id',
+        'password' => 'nullable',
+    ]);
+
+    DB::transaction(function () use ($request, $guru) {
+        $userData = [
+            'username' => $request->username,
+        ];
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
+        if ($guru->user) {
+            $guru->user->update($userData);
+        }
+
+        $guru->update([
+            'nama' => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'mapel_id' => $request->mapel_id,
+        ]);
+    });
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Guru berhasil diupdate'
+    ]);
+}
+
+public function updateOperator(Request $request, $id)
+{
+    $operator = Operator::with('user')->findOrFail($id);
+
+    $request->validate([
+        'username' => [
+            'required',
+            Rule::unique('users', 'username')->ignore($operator->user_id),
+        ],
+        'nama' => 'required',
+        'jabatan' => 'required',
+        'password' => 'nullable',
+    ]);
+
+    DB::transaction(function () use ($request, $operator) {
+        $userData = [
+            'username' => $request->username,
+        ];
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
+        if ($operator->user) {
+            $operator->user->update($userData);
+        }
+
+        $operator->update([
+            'nama' => $request->nama,
+            'jabatan' => $request->jabatan,
+        ]);
+    });
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Operator berhasil diupdate'
+    ]);
+}
 
     public function kelolaSiswa()
     {
